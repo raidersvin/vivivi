@@ -1,33 +1,39 @@
+
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(30) -- DO NOT remove this wait, it's against double counts.
 			-- INSERT YOUR CONFIG HERE --
-			
-_G.GPROGRESS_MODE = "Hatch"
-_G.GGFX_MODE = 1  --1 = REMOVE_TEXTURES : more stable! but no visuals
-_G.GDO_DOODLE_BATTLE = true
-_G.GRANK_TO = 99
-_G.GZONE_TO = 999 -- PLEASE READ FAQ about this property!!! it's important to understand. 99 means last zone W1 only!! 999: go to final zone of game
-_G.GMAX_EGG_SLOTS = 99
-_G.GMAX_EQUIP_SLOTS = 99
+_G.GEVENT_FPS  = 5
+_G.GDO_CARD_WORLD_EVENT = true
+_G.GGFX_MODE = 1
+_G.GZONE_TO = 999 -- to enter event from W3 intead put 999
+_G.GCARD_PACK_TO_BUY = "Retro Pack"
+_G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
+_G.GENCHANTS = {"Breakable Mayhem","Lucky Eggs","Lucky Eggs","Coins","Walkspeed","Explosive","Coins","Huge Hunter"}
+--_G.GLOOTBOXES = {"Locked Hype Egg"}
+_G.GLOOTBOXES = {"Locked Hype Egg","Retro Pack","Nightmare Pack","Fantasy Pack","Pog Pack","BIG Pack"}
+--_G.GPACKS_TO_SKIP_MERCHANT = {"Retro Pack","Nightmare Pack"}
+--_G.GSTAT_PET = {"Fairy Moth","Hydra Cat","Wicked Agony"}
+_G.GEVENT_UPGRADES = {
+    "CheaperPacks",
+    --"CheaperTradeIns",
+    "BonusCardChance",
+    --"PurchaseMorePacks",
+    "CheaperPrestonPackMerchantPrices",
+    "CheaperMysteryPackMerchantPrices",
+    --"EasierQuests"
+}
+_G.GCOINS_TO_KEEP_FOR_MERCHANT = "5m"
 _G.GHOLD_GIFTS = false
 _G.GHOLD_BUNDLES = false
-_G.GMAX_ZONE_UPGRADE_COST = 20000000
-_G.GEVENT_ITEMS_TO_USE = {"Mini Pinata","Party Box","Mini Lucky Block","Comet"}
-_G.GUSE_SPRINKLERS = true -- set to true to use sprinklers in your destination zone
-_G.GUSE_FLAGS = {"Fortune Flag"} -- Default: nil, To use specific flags all the time in your destination zone.
-_G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
-_G.GPOTIONS_MAX_TIER = 19
-_G.GUSE_ULTIMATES = {"Chest Spell","Tsunami","Tornado","Hidden Treasure","Pet Surge","Black Hole","UFO","Nightmare","Lightning Storm","TNT Shower","Ground Pound"}
-_G.GENCHANTS = {"Breakable Mayhem","Mini Chest Fortune","Diamonds","Treasure Hunter","Criticals","Huge Hunter","Huge Hunter","Huge Hunter","Strong Pets"}
+_G.GUSE_FLAGS = {"Coins Flag"}
 _G.GDAYCARE = true
-_G.GHATCH_CHARGED_EGGS = true
-_G.GCLEAR_FAVORITE_PETS = true
-_G.GWEBHOOK_USERID = "" -- your discord userID, not your name. numerical id.
-_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1273112470063546511/A3X4m45OzJPNWyofdnEIeGJ__agFyAn-ILrF6Rv34Cu1NiywwlUbhthc7SIZux6eGPfo" -- a webhook URL from your private discord channel.
-_G.GMAIL_RECEIVERS = {""} -- an account to receive hatched Huges etc
-_G.GLOOTBOXES = {"Locked Hype Egg"}
+_G.GWEBHOOK_USERID = ""
+_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1273112470063546511/A3X4m45OzJPNWyofdnEIeGJ__agFyAn-ILrF6Rv34Cu1NiywwlUbhthc7SIZux6eGPfo"
+_G.GMAIL_RECEIVERS = {""} -- Where to mail?
+-- warning this will mail all your huges! remove All Huges line if you don't want that
 _G.GMAIL_ITEMS = {
   ["All Huges"] = {Class = "Pet", Id = "All Huges", Amount = 1},
+
 }
 
 
