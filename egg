@@ -1,15 +1,11 @@
+
 local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
- 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-local eggFolder = Workspace:FindFirstChild("Eggs") -- Đặt đúng tên thư mục chứa trứng
-local closestEgg = nil
-local minDistance = math.huge
+local eggName = "Nearest Lucky Event Egg"
 
--- Tạo GUI hiển thị thông báo
+-- Tạo GUI cho thông báo
 local function createNotification(text)
     local screenGui = Instance.new("ScreenGui")
     screenGui.Parent = player:FindFirstChild("PlayerGui")
@@ -23,27 +19,21 @@ local function createNotification(text)
     coordLabel.Text = text
     coordLabel.Parent = screenGui
 
-    -- Xóa sau 5 giây
+    -- Ẩn sau 5 giây
     task.wait(5)
     screenGui:Destroy()
 end
 
--- Kiểm tra tất cả trứng trong thư mục "Eggs"
-if eggFolder then
-    for _, egg in pairs(eggFolder:GetChildren()) do
-        if egg:IsA("Model") and egg:FindFirstChild("PrimaryPart") then
-            local distance = (humanoidRootPart.Position - egg.PrimaryPart.Position).Magnitude
-            if distance < minDistance then
-                minDistance = distance
-                closestEgg = egg
-            end
-        end
+local function hatchEgg()
+    local hatchEvent = ReplicatedStorage:FindFirstChild("HatchEggEvent")
+    if hatchEvent then
+        hatchEvent:FireServer(eggName, 1)
+        createNotification("Đã nở trứng: " .. eggName)
+    else
+        createNotification("Lỗi: Không tìm thấy sự kiện nở trứng!")
     end
 end
 
--- Hiển thị thông báo quả trứng gần nhất
-if closestEgg then
-    createNotification("Trứng gần nhất: " .. closestEgg.Name)
-else
-    createNotification("Không tìm thấy trứng gần!")
-end
+-- Tự động nở trứng sau 3 giây
+task.wait(3)
+hatchEgg()
