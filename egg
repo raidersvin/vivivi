@@ -1,0 +1,38 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+
+local eggName = "Lucky Raid Lobby Egg 3"
+
+-- Tạo GUI cho thông báo
+local function createNotification(text)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = player:FindFirstChild("PlayerGui")
+
+    local coordLabel = Instance.new("TextLabel")
+    coordLabel.Size = UDim2.new(0, 300, 0, 50)
+    coordLabel.Position = UDim2.new(0, 10, 0, 10) -- Góc trái màn hình
+    coordLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    coordLabel.TextSize = 20
+    coordLabel.Text = text
+    coordLabel.Parent = screenGui
+
+    -- Ẩn sau 5 giây
+    task.wait(5)
+    screenGui:Destroy()
+end
+
+local function hatchEgg()
+    local hatchEvent = ReplicatedStorage:FindFirstChild("HatchEggEvent")
+    if hatchEvent then
+        hatchEvent:FireServer(eggName, 1)
+        createNotification("Đã nở trứng: " .. eggName)
+    else
+        createNotification("Lỗi: Không tìm thấy sự kiện nở trứng!")
+    end
+end
+
+-- Tự động nở trứng sau 3 giây
+task.wait(3)
+hatchEgg()
