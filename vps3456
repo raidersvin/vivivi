@@ -11,10 +11,8 @@ end
 task.wait(1)
 teleportCharacter(-10271, 4, -7310)
 task.spawn(function()
-	 while true do
-		task.wait(10)
+		task.wait(15)
 		teleportCharacter(1678.7, -136.3, -2379.0)
-	end
 
 end)
 
