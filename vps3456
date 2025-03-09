@@ -1,36 +1,46 @@
-local player = game.Players.LocalPlayer
+script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
+task.wait(30) -- DO NOT remove this wait, it's against double counts.
+			-- INSERT YOUR CONFIG HERE --
+			
+_G.GPROGRESS_MODE = "Hatch"
+_G.GGFX_MODE = 1  --1 = REMOVE_TEXTURES : more stable! but no visuals
+_G.GZONE_TO = 999 -- PLEASE READ FAQ about this property!!! it's important to understand. 99 means last zone W1 only!! 999: go to final zone of game
 
--- Chờ nhân vật xuất hiện trước khi dịch chuyển
-local function waitForCharacter()
-    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
-        player.CharacterAdded:Wait()
-    end
-    return player.Character
-end
-
--- Hàm dịch chuyển nhân vật đến tọa độ mong muốn
-local function teleportCharacter(xz, yz, zz)
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoidRootPart then
-        humanoidRootPart.CFrame = CFrame.new(Vector3.new(xz, yz, zz))
-    end
-end
-
--- Gọi hàm dịch chuyển sau 1 giây
-task.wait(1)
-teleportCharacter(-10271, 4, -7310)
-
--- Dịch chuyển lần 2 sau 5 giây
-task.spawn(function()
-    task.wait(5)
-    teleportCharacter(1678.7, -136.3, -2379.0)
-end)
+_G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the time in your destination zone.
+_G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
+_G.GPOTIONS_MAX_TIER = 19
+_G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
+_G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Strong Pets","Explosive","Chest Breaker","Criticals","Tap Power"}
+_G.GDAYCARE = true
 
 
-script_key="eaAbkLTPskMondKxsiOVTJcwmiwYQPeL";
+_G.GDO_LUCKY_WORLD_EVENT = true
+_G.GHATCH_LOBBY = true
+_G.GMAKE_LUCKY_GIFTS = true
+_G.GEVENT_UPGRADES = {
+   "LuckyRaidDamage",
+   "LuckyRaidAttackSpeed",
+   "LuckyRaidPets",
+   "LuckyRaidEggCost",
+   "LuckyRaidMoreCurrency",
+   "LuckyRaidBetterLoot",
+   "LuckyRaidTitanicChest",
+   "LuckyRaidHugeChest",
+   "LuckyRaidXP",
+   --"LuckyRaidPetSpeed",
+} 
 
-getgenv().LoadSettings = {["ExclusiveDaycare"] = {["UseMachine"] = false, ["Equips"] = true, ["DayTier"] = 3}, ["Charms"] = {["Start"] = false, ["Mode"] = "Add", ["Charm"] = "", ["Amount"] = 1}, ["Lootboxes"] = {["OpenGiftbags"] = true, ["Lootboxes"] = {}, ["DisableConfetti"] = true, ["OpenLootboxes"] = true, ["Giftbags"] = {"Charm Stone", "Large Enchant Bundle", "Flag Bundle", "Large Gift Bag", "Rainbow Mini Chest", "Enchant Bundle", "Large Potion Bundle", "Gift Bag", "Fruit Bundle", "Mini Chest", "Potion Bundle", "Diamond Gift Bag", "Toy Bundle"}}, ["UIScale"] = 0.75, ["Potions"] = {["PotionsToUse"] = {}, ["MaxTier"] = 3, ["UsePotions"] = false, ["UpgradePotions"] = false}, ["Optimization"] = {["Map"] = false, ["JoinInstance"] = false, ["Instance"] = "None", ["Breakables"] = true, ["Orbs"] = false, ["Pets"] = true, ["Ultimate"] = true}, ["Rainbow"] = {["UseMachine"] = false}, ["LoadSettings"] = true, ["Machines"] = {["Golden"] = {["PetsToGolden"] = {}, ["UseMachine"] = true}, ["UseBestEgg"] = false, ["Rainbow"] = {["UseMachine"] = true, ["PetsToRainbow"] = {}}, ["Fuse"] = {["UseMachine"] = false, ["PetsToFuse"] = {}}, ["UseVouchers"] = true, ["VouchersToUse"] = {"Booth Slot Voucher", "Daycare Slot Voucher", "Exclusive Daycare Slot Voucher"}}, ["Hatching"] = {["Start"] = false, ["Mailbox"] = {["Send"] = false, ["Player"] = ""}, ["Egg"] = {["id"] = "0 - Best Unlocked Egg", ["type"] = "Normal"}, ["HatchAmount"] = 103}, ["Worlds"] = {["Treehouse"] = false, ["Woodcutting"] = {["Start"] = false, ["BuyAxes"] = false, ["Quests"] = false}, ["Digging"] = {["Start"] = false, ["BuyShovels"] = false}, ["Fishing"] = {["Start"] = false, ["BuyRods"] = false}, ["Garden"] = {["Start"] = false, ["Seed"] = "None"}}, ["Webhooks"] = {["Statistics"] = {["Send"] = false, ["Minutes"] = 10, ["Webhook"] = "", ["ShowUsername"] = false}, ["DiscordUserId"] = "1203177576994967572", ["Daycare"] = {["Send"] = false, ["PingUser"] = false, ["Webhook"] = "", ["ShowUsername"] = false}, ["Hatching"] = {["Rarities"] = {}, ["Webhook"] = "", ["Send"] = false, ["PingUser"] = false, ["ShowUsername"] = false}}, ["Events"] = {["CardWorldEvent"] = {["PurchasePacks"] = false, ["PurchaseUpgrades"] = false, ["SelectedPack"] = "None"}}, ["Farming"] = {["AreaEvents"] = {["Event"] = "", ["Spawn"] = false}, ["IgnoreElementalChest"] = false, ["Zone"] = "0 - Current Zone", ["Progress"] = false, ["UseUltimate"] = true, ["MaxEggSlots"] = 4, ["PetsPerBreakable"] = 3, ["Flags"] = {["Flag"] = "Strength Flag", ["Place"] = true, ["Amount"] = 2}, ["BuyEggSlots"] = false, ["Fruits"] = {["Fruits"] = {"Watermelon", "Shiny Watermelon", "Candycane", "Apple", "Shiny Apple", "Rainbow", "Pineapple", "Shiny Pineapple", "Orange", "Shiny Orange", "Banana", "Shiny Banana"}, ["Use"] = true}, ["Sprinklers"] = {["Place"] = false, ["Amount"] = 1}, ["Start"] = true, ["Buffs"] = {["Buffs"] = {"Christmas Cookie", "Glitched Drive", "Toy Ball", "Toy Bone", "Squeaky Toy", "Hot Cocoa"}, ["Use"] = true}, ["MaxPetSlots"] = 4, ["BuyPetSlots"] = false}, ["ForceVIP"] = false, ["Golden"] = {["UseMachine"] = false}, ["Daycare"] = {["UseMachine"] = true}, ["KeysVouchers"] = {["UseTickets"] = false, ["CombineKeys"] = false, ["UseSecretKeys"] = false, ["SkipSpinAnimation"] = true, ["KeysToUse"] = {}, ["UseKeys"] = false, ["KeysToCombine"] = {}, ["UsePrisonKeys"] = false, ["TicketsToUse"] = {}}}
 
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a2369ce34d44187610ac9bf5039c37ab.lua"))()
+
+
+_G.GWEBHOOK_USERID = "" -- your discord userID, not your name. numerical id.
+_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1273112470063546511/A3X4m45OzJPNWyofdnEIeGJ__agFyAn-ILrF6Rv34Cu1NiywwlUbhthc7SIZux6eGPfo" -- a webhook URL from your private discord channel.
+_G.GMAIL_RECEIVERS = {""} -- an account to receive hatched Huges etc
+
+_G.GMAIL_ITEMS = {
+  ["All Huges"] = {Class = "Pet", Id = "All Huges", Amount = 1},
+}
+
+
+		-- INSERT YOUR CONFIG HERE --
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
