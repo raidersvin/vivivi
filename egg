@@ -18,8 +18,8 @@ local function createNotification(text)
     coordLabel.Text = text
     coordLabel.Parent = screenGui
 
-    -- Ẩn sau 5 giây
-    task.wait(5)
+    -- Ẩn sau 15 giây
+    task.wait(15)
     screenGui:Destroy()
 end
 
