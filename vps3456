@@ -24,7 +24,7 @@ teleportCharacter(-10271, 4, -7310)
 
 -- Dịch chuyển lần 2 sau 15 giây
 task.spawn(function()
-    task.wait(15)
+    task.wait(5)
     teleportCharacter(1678.7, -136.3, -2379.0)
 end)
 
