@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 
-local eggName = "Lucky Raid Lobby Egg 3"
+local eggName = "Lucky Raid"
 
 -- Tạo GUI cho thông báo
 local function createNotification(text)
