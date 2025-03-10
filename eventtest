@@ -8,7 +8,7 @@ _G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the ti
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
 _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
-_G.GENCHANTS = {"Chest Breaker","Criticals","Tap Power","Strong Pets","Strong Pets","Chest Breaker","Tap Power","Lucky Eggs","Lucky Eggs"}
+_G.GENCHANTS = {"Chest Breaker","Criticals","Tap Power","Strong Pets","Strong Pets","Chest Breaker","Huge Hunter","Huge Hunter","Tap Power"}
 _G.GDAYCARE = true
 
 _G.GAUTO_RAID = true
