@@ -21,13 +21,13 @@ _G.GHATCH_LOBBY = true
 _G.GMAKE_LUCKY_GIFTS = true
 _G.GEVENT_UPGRADES = {
    "LuckyRaidDamage",
-   --"LuckyRaidAttackSpeed",
+   "LuckyRaidAttackSpeed",
    "LuckyRaidPets",
    --"LuckyRaidEggCost",
    --"LuckyRaidMoreCurrency",
    --"LuckyRaidBetterLoot",
-   --"LuckyRaidTitanicChest",
-   --"LuckyRaidHugeChest",
+   "LuckyRaidTitanicChest",
+   "LuckyRaidHugeChest",
    "LuckyRaidXP",
    --"LuckyRaidPetSpeed",
 } 
