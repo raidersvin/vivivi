@@ -1,8 +1,8 @@
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
 			-- INSERT YOUR CONFIG HERE --
-			
-_G.GGFX_MODE = 1  --1 = REMOVE_TEXTURES : more stable! but no visuals
+
+_G.GGFX_MODE = 3  --1 = REMOVE_TEXTURES : more stable! but no visuals
 _G.GZONE_TO = 999 -- PLEASE READ FAQ about this property!!! it's important to understand. 99 means last zone W1 only!! 999: go to final zone of game
 _G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the time in your destination zone.
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
@@ -11,6 +11,9 @@ _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
 _G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Strong Pets","Explosive","Chest Breaker","Criticals","Tap Power"}
 _G.GDAYCARE = true
 
+_G.GAUTO_RAID = true
+_G.GMAX_RAID_LEVEL = 9999
+_G.GMIN_MULTIPLIER = 300
 
 _G.GLOOTBOXES = {"Locked Hype Egg"}
 _G.GDO_LUCKY_WORLD_EVENT = true
