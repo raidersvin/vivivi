@@ -27,15 +27,14 @@ _G.GEVENT_UPGRADES = {
    "LuckyRaidDamage",
    "LuckyRaidAttackSpeed",
    "LuckyRaidPets",
-   "LuckyRaidEggCost",
+   --"LuckyRaidEggCost",
    --"LuckyRaidMoreCurrency",
    --"LuckyRaidBetterLoot",
    "LuckyRaidTitanicChest",
    "LuckyRaidHugeChest",
-   "LuckyRaidXP",
+   --"LuckyRaidXP",
    --"LuckyRaidPetSpeed",
 } 
-
 _G.GWEBHOOK_USERID = "" -- your discord userID, not your name. numerical id.
 _G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1267494313978236969/A5PYB1MQt2UUASkZLJNvGB1qxAV7ajQAJeUTeCK8bssgC2u-VM_s2iH89ZOpQFwgiFQx" -- a webhook URL from your private discord channel.
 _G.GMAIL_RECEIVERS = {""} -- an account to receive hatched Huges etc
