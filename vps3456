@@ -1,3 +1,7 @@
+task.spawn(function()
+    task.wait(7200)  
+	game.Players.LocalPlayer:Kick("vin7200")
+end)
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
 			-- INSERT YOUR CONFIG HERE --
@@ -10,11 +14,12 @@ _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
 _G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Strong Pets","Explosive","Chest Breaker","Criticals","Tap Power"}
 _G.GDAYCARE = true
+_G.GHATCH_CHARGED_EGGS = true
 
 _G.GAUTO_RAID = true
-_G.GMAX_RAID_LEVEL = 500
-_G.GMIN_MULTIPLIER = 100
-
+_G.GMAX_RAID_LEVEL = 400
+_G.GMIN_MULTIPLIER = 75
+_G.GHOLD_BUNDLES = true
 _G.GLOOTBOXES = {"Locked Hype Egg"}
 _G.GDO_LUCKY_WORLD_EVENT = true
 _G.GHATCH_LOBBY = true
