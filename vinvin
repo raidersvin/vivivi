@@ -10,6 +10,8 @@ _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
 _G.GENCHANTS = {"Chest Breaker","Criticals","Tap Power","Strong Pets","Strong Pets","Chest Breaker","Huge Hunter","Huge Hunter","Tap Power"}
 _G.GDAYCARE = true
+_G.GHOLD_GIFTS = true
+_G.GHOLD_BUNDLES = true
 
 _G.GAUTO_RAID = true
 _G.GMAX_RAID_LEVEL = 9999
