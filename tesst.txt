@@ -1,5 +1,5 @@
 task.spawn(function()
-    task.wait(60)  
+    task.wait(10800)  
 	game.Players.LocalPlayer:Kick("vin")
 end)
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
@@ -14,6 +14,7 @@ _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
 _G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Strong Pets","Explosive","Chest Breaker","Criticals","Tap Power"}
 _G.GDAYCARE = true
+_G.GHATCH_CHARGED_EGGS = true
 
 _G.GAUTO_RAID = true
 _G.GMAX_RAID_LEVEL = 500
