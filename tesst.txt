@@ -1,6 +1,6 @@
 task.spawn(function()
     task.wait(10800)  
-	game.Players.LocalPlayer:Kick("vin")
+	game.Players.LocalPlayer:Kick("vin10800")
 end)
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
