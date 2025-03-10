@@ -1,7 +1,3 @@
-task.spawn(function()
-    task.wait(7200)  
-	game.Players.LocalPlayer:Kick("vin7200")
-end)
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
 			-- INSERT YOUR CONFIG HERE --
@@ -16,7 +12,7 @@ _G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Stro
 _G.GDAYCARE = true
 _G.GHATCH_CHARGED_EGGS = true
 
-_G.GAUTO_RAID = true
+_G.GAUTO_RAID = false
 _G.GMAX_RAID_LEVEL = 400
 _G.GMIN_MULTIPLIER = 50
 _G.GHOLD_BUNDLES = true
