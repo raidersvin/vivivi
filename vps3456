@@ -1,3 +1,32 @@
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local function waitForCharacter()
+    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
+        player.CharacterAdded:Wait()
+    end
+    return player.Character
+end 
+local function teleportIncreaseX()
+    local character = waitForCharacter()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        local currentPos = humanoidRootPart.Position
+        if currentPos.X >= -530 and currentPos.X <= -520 then
+            humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
+        end
+    end
+end
+
+task.spawn(function()
+    while true do
+        teleportIncreaseX()
+        task.wait(20) 
+    end
+end)
+
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
 
@@ -9,7 +38,7 @@ _G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the ti
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
 _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
-_G.GENCHANTS = {"Corruption","Criticals","Tap Teamwork","Strong Pets","Chest Breaker","Chest Breaker","Exotic Pet","Happy Pets","Strong Pets"}
+_G.GENCHANTS = {"Corruption","Criticals","Tap Teamwork","Strong Pets","Chest Breaker","Chest Breaker","Exotic Pet","Strong Pets","Huge Hunter"}
 _G.GDAYCARE = true
 _G.GHOLD_GIFTS = true
 _G.GHOLD_BUNDLES = true
