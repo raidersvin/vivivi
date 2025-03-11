@@ -2,30 +2,28 @@ local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
--- Chờ nhân vật xuất hiện trước khi dịch chuyển
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
     end
     return player.Character
-end
-
--- Hàm dịch chuyển nhân vật, tăng X thêm 36 mỗi lần
+end 
 local function teleportIncreaseX()
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 
     if humanoidRootPart then
         local currentPos = humanoidRootPart.Position
-        humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
+        if currentPos.X >= -530 and currentPos.X <= -520 then
+            humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
+        end
     end
 end
 
--- Vòng lặp: Dịch chuyển mỗi 60 giây
 task.spawn(function()
     while true do
         teleportIncreaseX()
-        task.wait(120) -- Đợi 120 giây trước khi dịch chuyển lần tiếp theo
+        task.wait(20) 
     end
 end)
 
