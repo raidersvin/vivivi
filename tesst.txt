@@ -32,7 +32,6 @@ local function waitForCharacter()
     end
     return player.Character
 end
-
 -- Hàm dịch chuyển nhân vật đến X = -5, giữ nguyên Y và Z
 local function teleportToXMinusFive()
     local character = waitForCharacter()
