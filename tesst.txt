@@ -1,6 +1,28 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
+
+-- Tạo GUI hiển thị tọa độ
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local coordLabel = Instance.new("TextLabel")
+coordLabel.Size = UDim2.new(0, 300, 0, 50)
+coordLabel.Position = UDim2.new(0, 10, 0, 10) -- Góc trái trên cùng
+coordLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+coordLabel.TextSize = 20
+coordLabel.Parent = screenGui
+
+-- Cập nhật vị trí nhân vật liên tục
+RunService.RenderStepped:Connect(function()
+    local character = player.Character
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        local pos = character.HumanoidRootPart.Position
+        coordLabel.Text = string.format("X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
+    end
+end)
 
 -- Chờ nhân vật xuất hiện trước khi dịch chuyển
 local function waitForCharacter()
@@ -18,6 +40,7 @@ local function teleportToXMinusFive()
     if humanoidRootPart then
         local currentPos = humanoidRootPart.Position
         humanoidRootPart.CFrame = CFrame.new(-5, currentPos.Y, currentPos.Z) -- Đổi X thành -5
+        print("Dịch chuyển đến X = -5 tại Y:", currentPos.Y, "Z:", currentPos.Z)
     end
 end
 
