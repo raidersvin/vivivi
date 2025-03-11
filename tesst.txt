@@ -2,25 +2,25 @@ local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
--- Tạo UI để hiển thị ID game
+-- Tạo UI để hiển thị PlaceId
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
-local gameIdLabel = Instance.new("TextLabel")
-gameIdLabel.Size = UDim2.new(0, 300, 0, 50)
-gameIdLabel.Position = UDim2.new(1, -310, 0, 10) -- Góc phải trên màn hình
-gameIdLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-gameIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-gameIdLabel.TextSize = 20
-gameIdLabel.Parent = screenGui
+local placeIdLabel = Instance.new("TextLabel")
+placeIdLabel.Size = UDim2.new(0, 300, 0, 50)
+placeIdLabel.Position = UDim2.new(1, -310, 0, 10) -- Góc phải trên màn hình
+placeIdLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+placeIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+placeIdLabel.TextSize = 20
+placeIdLabel.Parent = screenGui
 
--- Hàm cập nhật ID game liên tục
-local function updateGameID()
+-- Hàm cập nhật PlaceId liên tục
+local function updatePlaceID()
     while true do
-        gameIdLabel.Text = "Game ID: " .. game.GameId
+        placeIdLabel.Text = "Place ID: " .. game.PlaceId
         task.wait(5) -- Cập nhật mỗi 5 giây
     end
 end
 
--- Chạy vòng lặp cập nhật ID
-task.spawn(updateGameID)
+-- Chạy vòng lặp cập nhật PlaceId
+task.spawn(updatePlaceID)
