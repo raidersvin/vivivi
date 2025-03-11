@@ -7,7 +7,7 @@ local function waitForCharacter()
         player.CharacterAdded:Wait()
     end
     return player.Character
-end
+end 
 local function teleportIncreaseX()
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
