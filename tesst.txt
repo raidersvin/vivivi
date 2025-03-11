@@ -2,15 +2,12 @@ local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
--- Chờ nhân vật xuất hiện trước khi dịch chuyển
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
     end
     return player.Character
 end
-
--- Hàm dịch chuyển nhân vật, tăng X thêm 36 nếu X nằm trong khoảng -530 đến -520
 local function teleportIncreaseX()
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -23,10 +20,9 @@ local function teleportIncreaseX()
     end
 end
 
--- Vòng lặp: Dịch chuyển mỗi 60 giây nếu điều kiện đúng
 task.spawn(function()
     while true do
         teleportIncreaseX()
-        task.wait(20) -- Đợi 60 giây trước khi kiểm tra lại
+        task.wait(20) 
     end
 end)
