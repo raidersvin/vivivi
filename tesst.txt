@@ -18,7 +18,7 @@ placeIdLabel.Parent = screenGui
 local function updatePlaceID()
     while true do
         placeIdLabel.Text = "Place ID: " .. game.PlaceId
-        task.wait(5) -- Cập nhật mỗi 5 giây
+        task.wait(3) -- Cập nhật mỗi 5 giây
     end
 end
 
