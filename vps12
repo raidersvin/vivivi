@@ -29,9 +29,9 @@ _G.GEVENT_UPGRADES = {
    --"LuckyRaidEggCost",
    --"LuckyRaidMoreCurrency",
    --"LuckyRaidBetterLoot",
-   "LuckyRaidTitanicChest",
-   "LuckyRaidHugeChest",
-   --"LuckyRaidXP",
+   --"LuckyRaidTitanicChest",
+   --"LuckyRaidHugeChest",
+   "LuckyRaidXP",
    --"LuckyRaidPetSpeed",
 } 
 
