@@ -2,27 +2,25 @@ local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
-local function waitForCharacter()
-    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
-        player.CharacterAdded:Wait()
-    end
-    return player.Character
-end 
-local function teleportIncreaseX()
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+-- Tạo UI để hiển thị ID game
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
 
-    if humanoidRootPart then
-        local currentPos = humanoidRootPart.Position
-        if currentPos.X >= -530 and currentPos.X <= -520 then
-            humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
-        end
+local gameIdLabel = Instance.new("TextLabel")
+gameIdLabel.Size = UDim2.new(0, 300, 0, 50)
+gameIdLabel.Position = UDim2.new(1, -310, 0, 10) -- Góc phải trên màn hình
+gameIdLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+gameIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+gameIdLabel.TextSize = 20
+gameIdLabel.Parent = screenGui
+
+-- Hàm cập nhật ID game liên tục
+local function updateGameID()
+    while true do
+        gameIdLabel.Text = "Game ID: " .. game.GameId
+        task.wait(5) -- Cập nhật mỗi 5 giây
     end
 end
 
-task.spawn(function()
-    while true do
-        teleportIncreaseX()
-        task.wait(20) 
-    end
-end)
+-- Chạy vòng lặp cập nhật ID
+task.spawn(updateGameID)
