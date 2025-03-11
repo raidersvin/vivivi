@@ -3,6 +3,7 @@ local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 
+
 -- Tạo GUI hiển thị tọa độ
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
