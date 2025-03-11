@@ -1,30 +1,25 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 
--- Chờ nhân vật xuất hiện trước khi dịch chuyển
-local function waitForCharacter()
-    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
-        player.CharacterAdded:Wait()
-    end
-    return player.Character
-end
+-- Tạo GUI hiển thị tọa độ
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Hàm dịch chuyển nhân vật, tăng X thêm 36 mỗi lần
-local function teleportIncreaseX()
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+local coordLabel = Instance.new("TextLabel")
+coordLabel.Size = UDim2.new(0, 300, 0, 50)
+coordLabel.Position = UDim2.new(0, 10, 0, 10) -- Góc trái trên cùng
+coordLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+coordLabel.TextSize = 20
+coordLabel.Parent = screenGui
 
-    if humanoidRootPart then
-        local currentPos = humanoidRootPart.Position
-        humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
-    end
-end
-
--- Vòng lặp: Dịch chuyển mỗi 60 giây
-task.spawn(function()
-    while true do
-        teleportIncreaseX()
-        task.wait(60) -- Đợi 60 giây trước khi dịch chuyển lần tiếp theo
+-- Cập nhật vị trí nhân vật liên tục
+RunService.RenderStepped:Connect(function()
+    local character = player.Character
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        local pos = character.HumanoidRootPart.Position
+        coordLabel.Text = string.format("X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
     end
 end)
