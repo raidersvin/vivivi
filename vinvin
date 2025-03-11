@@ -25,7 +25,7 @@ end
 task.spawn(function()
     while true do
         teleportIncreaseX()
-        task.wait(120) -- Đợi 60 giây trước khi dịch chuyển lần tiếp theo
+        task.wait(120) -- Đợi 120 giây trước khi dịch chuyển lần tiếp theo
     end
 end)
 
