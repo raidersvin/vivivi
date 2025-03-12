@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 
--- 🛠️ Chờ nhân vật xuất hiện trước khi kiểm tra
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
@@ -10,7 +9,6 @@ local function waitForCharacter()
     return player.Character
 end
 
--- 📌 Hàm dịch chuyển nhân vật đến tọa độ chỉ định
 local function teleportCharacter(x, y, z)
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -21,7 +19,6 @@ local function teleportCharacter(x, y, z)
     end
 end
 
--- 🔥 Tạo GUI hiển thị tọa độ giữa màn hình
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
@@ -36,7 +33,6 @@ coordLabel.Font = Enum.Font.SourceSansBold
 coordLabel.Text = "🔍 Đang lấy tọa độ..."
 coordLabel.Parent = screenGui
 
--- 🔥 Cập nhật tọa độ nhân vật liên tục hiển thị ở giữa màn hình
 RunService.RenderStepped:Connect(function()
     local character = player.Character
     if character and character:FindFirstChild("HumanoidRootPart") then
@@ -84,7 +80,6 @@ task.spawn(function()
     end
 end)
 
--- 📌 Hàm kiểm tra X và cộng thêm 36 nếu trong khoảng (-530 đến -520)
 local function teleportIncreaseX()
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -97,7 +92,7 @@ local function teleportIncreaseX()
         end
     end
 end
--- 🔥 Kiểm tra và tăng X mỗi 20 giây nếu X nằm trong khoảng -530 đến -520
+
 task.spawn(function()
     while true do
         teleportIncreaseX()
