@@ -1,9 +1,8 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-
 local player = Players.LocalPlayer
 
--- Chờ nhân vật xuất hiện trước khi dịch chuyển
+-- Chờ nhân vật xuất hiện trước khi kiểm tra
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
@@ -11,49 +10,67 @@ local function waitForCharacter()
     return player.Character
 end
 
--- Hàm dịch chuyển nhân vật, tăng X thêm giá trị ngẫu nhiên từ 5 đến 30
-local function teleportRandomX()
+-- Hàm dịch chuyển nhân vật đến tọa độ chỉ định
+local function teleportCharacter(x, y, z)
     local character = waitForCharacter()
-    if not character then return end
-
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-    if humanoidRootPart then
-        local currentPos = humanoidRootPart.Position
-        local randomOffset = math.random(5, 30) -- Tạo số ngẫu nhiên từ 5 đến 30
-        local newX = currentPos.X + randomOffset
-        humanoidRootPart.CFrame = CFrame.new(newX, currentPos.Y, currentPos.Z)
 
-        print(string.format("Dịch chuyển đến: X = %.1f (tăng thêm: +%d)", newX, randomOffset))
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(x, y, z)
+        updateStatus("✅ Đã dịch chuyển đến: X=" .. x .. ", Y=" .. y .. ", Z=" .. z)
     end
 end
 
--- Tạo GUI hiển thị tọa độ ở giữa màn hình
+-- Tạo UI hiển thị trạng thái ở giữa màn hình
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
-local coordLabel = Instance.new("TextLabel")
-coordLabel.Size = UDim2.new(0, 300, 0, 50)
-coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Giữa màn hình
-coordLabel.BackgroundTransparency = 0.5
-coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-coordLabel.TextColor3 = Color3.new(1, 1, 1)
-coordLabel.TextScaled = true
-coordLabel.Font = Enum.Font.SourceSansBold
-coordLabel.Parent = screenGui
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(0, 400, 0, 50)
+statusLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Giữa màn hình
+statusLabel.BackgroundTransparency = 0.4
+statusLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.TextScaled = true
+statusLabel.Font = Enum.Font.SourceSansBold
+statusLabel.Text = "🛠️ Kiểm tra trạng thái..."
+statusLabel.Parent = screenGui
 
--- Cập nhật vị trí nhân vật liên tục
-RunService.RenderStepped:Connect(function()
-    local character = player.Character
-    if character and character:FindFirstChild("HumanoidRootPart") then
-        local pos = character.HumanoidRootPart.Position
-        coordLabel.Text = string.format("Tọa độ hiện tại:\nX: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
-    end
-end)
+-- Hàm cập nhật nội dung của UI
+local function updateStatus(text)
+    statusLabel.Text = text
+end
 
--- Vòng lặp: Dịch chuyển mỗi 60 giây
+-- Kiểm tra vị trí nhân vật mỗi 5 giây, nếu đứng yên 10 lần liên tiếp thì dịch chuyển
 task.spawn(function()
+    local lastPosition = nil
+    local stillCount = 0 -- Đếm số lần nhân vật đứng yên liên tiếp
+
     while true do
-        teleportRandomX()
-        task.wait(5) -- Đợi 60 giây trước khi dịch chuyển lần tiếp theo
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local humanoidRootPart = character.HumanoidRootPart
+            local currentPosition = humanoidRootPart.Position
+
+            -- So sánh vị trí hiện tại với lần kiểm tra trước đó
+            if lastPosition and (currentPosition - lastPosition).Magnitude < 1 then
+                stillCount = stillCount + 1
+                updateStatus("⚠️ Nhân vật đứng yên lần thứ: " .. stillCount)
+
+                -- Nếu đứng yên 10 lần liên tiếp, dịch chuyển
+                if stillCount >= 10 then
+                    updateStatus("⏩ Nhân vật đã đứng yên quá lâu, dịch chuyển...")
+                    teleportCharacter(-540, 109, -5704)
+                    stillCount = 0 -- Reset bộ đếm sau khi dịch chuyển
+                end
+            else
+                stillCount = 0 -- Reset bộ đếm nếu nhân vật di chuyển
+                updateStatus("✅ Nhân vật vẫn di chuyển...")
+            end
+
+            lastPosition = currentPosition
+        end
+
+        task.wait(5) -- Kiểm tra mỗi 5 giây
     end
 end)
