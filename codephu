@@ -1,1 +1,82 @@
+task.wait(50)
 
+script_key="JjmhlAdFeuXFWubLiuoxRyorUCfAzHwb";
+loadstring(game:HttpGet('https://zaphub.xyz/Exec'))()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+-- Chờ nhân vật xuất hiện trước khi kiểm tra
+local function waitForCharacter()
+    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
+        player.CharacterAdded:Wait()
+    end
+    return player.Character
+end
+
+-- Hàm dịch chuyển nhân vật đến tọa độ chỉ định
+local function teleportCharacter(x, y, z)
+    local character = waitForCharacter()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(x, y, z)
+        updateStatus("✅ Đã dịch chuyển đến: X=" .. x .. ", Y=" .. y .. ", Z=" .. z)
+    end
+end
+
+-- Tạo UI hiển thị trạng thái ở giữa màn hình
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(0, 400, 0, 50)
+statusLabel.Position = UDim2.new(0.5, -200, 0.5, -25) -- Giữa màn hình
+statusLabel.BackgroundTransparency = 0.4
+statusLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.TextScaled = true
+statusLabel.Font = Enum.Font.SourceSansBold
+statusLabel.Text = "🛠️ Kiểm tra trạng thái..."
+statusLabel.Parent = screenGui
+
+-- Hàm cập nhật nội dung của UI
+local function updateStatus(text)
+    statusLabel.Text = text
+end
+
+-- Kiểm tra vị trí nhân vật mỗi 5 giây, nếu đứng yên 50 giây thì dịch chuyển
+task.spawn(function()
+    local lastPosition = nil
+    local stillTime = 0 -- Thời gian đứng yên tính bằng giây
+
+    while true do
+        local character = player.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            local humanoidRootPart = character.HumanoidRootPart
+            local currentPosition = humanoidRootPart.Position
+
+            -- So sánh vị trí hiện tại với lần kiểm tra trước đó
+            if lastPosition and (currentPosition - lastPosition).Magnitude < 1 then
+                stillTime = stillTime + 5 -- Cộng 5 giây mỗi lần đứng yên
+                updateStatus("⚠️ Đứng yên: " .. stillTime .. " giây")
+
+                -- Nếu đứng yên tổng cộng 50 giây, dịch chuyển
+                if stillTime >= 300 then
+                    updateStatus("⏩ Đứng yên quá lâu, dịch chuyển...")
+                    teleportCharacter(-540, 109, -5704)
+                    task.wait(15)
+                    stillTime = 0 -- Reset bộ đếm và tiếp tục kiểm tra lại
+                end
+            else
+                stillTime = 0 -- Reset bộ đếm nếu nhân vật di chuyển
+                updateStatus("✅ Nhân vật vẫn di chuyển...")
+            end
+
+            lastPosition = currentPosition
+        end
+
+        task.wait(5) -- Kiểm tra mỗi 5 giây
+    end
+end)
