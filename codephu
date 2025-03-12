@@ -52,7 +52,7 @@ end
 
 -- Kiểm tra vị trí nhân vật liên tục mỗi 2 giây
 task.spawn(function()
-    task.wait(20)
+
     while true do
         local character = player.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
@@ -67,7 +67,7 @@ task.spawn(function()
             end
         end
 
-        task.wait(2) -- Kiểm tra mỗi 2 giây
+        task.wait(20) 
     end
 end)
 
