@@ -97,7 +97,6 @@ local function teleportIncreaseX()
         end
     end
 end
-
 -- 🔥 Kiểm tra và tăng X mỗi 20 giây nếu X nằm trong khoảng -530 đến -520
 task.spawn(function()
     while true do
