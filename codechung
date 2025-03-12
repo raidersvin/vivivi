@@ -13,13 +13,6 @@ _G.GHOLD_GIFTS = true
 _G.GHOLD_BUNDLES = true
 _G.GLOOTBOXES = {"Locked Hype Egg","Lucky Gift"}
 
-_G.GDO_LUCKY_WORLD_EVENT = true
-_G.GMAKE_LUCKY_GIFTS = true
-_G.GEVENT_UPGRADES = {
-   "LuckyRaidDamage",
-   "LuckyRaidXP",
-} 
-
 
 
 -- INSERT YOUR CONFIG HERE --
