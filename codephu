@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 
--- Tạo GUI hiển thị tọa độ
+-- 📌 Tạo GUI hiển thị tọa độ giữa màn hình
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
@@ -14,24 +14,10 @@ coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
 coordLabel.TextColor3 = Color3.new(1, 1, 1)
 coordLabel.TextScaled = true
 coordLabel.Font = Enum.Font.SourceSansBold
-coordLabel.Text = "Đang lấy tọa độ..."
+coordLabel.Text = "🔍 Đang lấy tọa độ..."
 coordLabel.Parent = screenGui
 
--- Cập nhật tọa độ nhân vật liên tục
-RunService.RenderStepped:Connect(function()
-    local character = player.Character
-    if character and character:FindFirstChild("HumanoidRootPart") then
-        local pos = character.HumanoidRootPart.Position
-        coordLabel.Text = string.format("Tọa độ: X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
-    else
-        coordLabel.Text = "Không tìm thấy nhân vật!"
-    end
-end)
-
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
--- Chờ nhân vật xuất hiện trước khi kiểm tra
+-- 📌 Chờ nhân vật xuất hiện trước khi kiểm tra
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
@@ -39,7 +25,7 @@ local function waitForCharacter()
     return player.Character
 end
 
--- Hàm dịch chuyển nhân vật đến tọa độ chỉ định
+-- 📌 Hàm dịch chuyển nhân vật đến tọa độ chỉ định
 local function teleportCharacter(x, y, z)
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
@@ -50,8 +36,19 @@ local function teleportCharacter(x, y, z)
     end
 end
 
-task.spawn(function()
+-- 🔥 Cập nhật tọa độ nhân vật liên tục hiển thị ở giữa màn hình
+RunService.RenderStepped:Connect(function()
+    local character = player.Character
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        local pos = character.HumanoidRootPart.Position
+        coordLabel.Text = string.format("📍 Tọa độ: X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
+    else
+        coordLabel.Text = "⚠️ Không tìm thấy nhân vật!"
+    end
+end)
 
+-- 🛠️ Kiểm tra Y mỗi 20 giây, nếu nhân vật bị kẹt trong khoảng -5 đến 10 thì dịch chuyển
+task.spawn(function()
     while true do
         local character = player.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
@@ -59,21 +56,30 @@ task.spawn(function()
 
             -- Kiểm tra nếu Y nằm trong khoảng -5 đến 10
             if pos.Y >= -5 and pos.Y <= 10 then
-                print("⚠️ Nhân vật ở Y trong khoảng -5 đến 10, sẽ dịch chuyển!")
+                print("⚠️ Nhân vật bị kẹt trong khoảng -5 đến 10, sẽ dịch chuyển!")
                 teleportCharacter(-10270, 4.4, -7310)
             else
                 print(string.format("✅ Nhân vật ổn định: Y = %.1f", pos.Y))
             end
         end
 
-        task.wait(20) 
+        task.wait(20) -- Kiểm tra lại mỗi 20 giây
     end
 end)
 
-
+-- 🎁 Auto Claim Daycare mỗi 3600 giây (1 tiếng)
 task.spawn(function()
-  while true do
-  require(game.ReplicatedStorage.Library.Client.ExclusiveDaycareCmds).Claim()
-  task.wait(3600) 
-  end
-end
+    while true do
+        local success, err = pcall(function()
+            require(game.ReplicatedStorage.Library.Client.ExclusiveDaycareCmds).Claim()
+        end)
+
+        if success then
+            print("🎁 ✅ Đã tự động Claim Daycare thành công!")
+        else
+            warn("❌ Lỗi khi Claim Daycare:", err)
+        end
+
+        task.wait(3600) -- Lặp lại mỗi 3600 giây
+    end
+end)
