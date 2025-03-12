@@ -35,7 +35,7 @@ local function teleportCharacter(x, y, z)
         print(string.format("✅ Đã dịch chuyển đến: X=%.1f | Y=%.1f | Z=%.1f", x, y, z))
     end
 end
-
+task.wait(20)
 -- 🔥 Cập nhật tọa độ nhân vật liên tục hiển thị ở giữa màn hình
 RunService.RenderStepped:Connect(function()
     local character = player.Character
