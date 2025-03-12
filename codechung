@@ -32,9 +32,9 @@ task.wait(1) -- DO NOT remove this wait, it's against double counts.
 
 			-- INSERT YOUR CONFIG HERE --
 
-_G.GGFX_MODE = 1  --1 = REMOVE_TEXTURES : more stable! but no visuals
-_G.GZONE_TO = 999 -- PLEASE READ FAQ about this property!!! it's important to understand. 99 means last zone W1 only!! 999: go to final zone of game
-_G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the time in your destination zone.
+_G.GGFX_MODE = 1  
+_G.GZONE_TO = 999 
+_G.GUSE_FLAGS = {"Hasty Flag"}
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
 _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
