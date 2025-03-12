@@ -61,7 +61,7 @@ task.spawn(function()
                 if stillCount >= 10 then
                     updateStatus("⏩ Nhân vật đã đứng yên quá lâu, dịch chuyển...")
                     teleportCharacter(-540, 109, -5704)
-                    stillCount = 0 -- Reset bộ đếm sau khi dịch chuyển
+                    stillCount = 0 -- Reset bộ đếm và tiếp tục kiểm tra lại
                 end
             else
                 stillCount = 0 -- Reset bộ đếm nếu nhân vật di chuyển
