@@ -45,7 +45,7 @@ _G.GHOLD_BUNDLES = true
 _G.GLOOTBOXES = {"Locked Hype Egg","Lucky Gift"}
 _G.GUSE_BOOSTS = true
 
-_G.GAUTO_RAID = true
+_G.GAUTO_RAID = false
 _G.GMAX_RAID_LEVEL = 9999
 _G.GMIN_MULTIPLIER = 300
 _G.GSKIP_RAID_EGG = true
