@@ -1,8 +1,5 @@
-task.wait(50)
 script_key="JjmhlAdFeuXFWubLiuoxRyorUCfAzHwb";
 loadstring(game:HttpGet('https://zaphub.xyz/Exec'))()
-
-
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -47,10 +44,10 @@ local function updateStatus(text)
     statusLabel.Text = text
 end
 
--- Kiểm tra vị trí nhân vật mỗi 5 giây, nếu đứng yên 10 lần liên tiếp thì dịch chuyển
+-- Kiểm tra vị trí nhân vật mỗi 5 giây, nếu đứng yên 50 giây thì dịch chuyển
 task.spawn(function()
     local lastPosition = nil
-    local stillCount = 0 -- Đếm số lần nhân vật đứng yên liên tiếp
+    local stillTime = 0 -- Thời gian đứng yên tính bằng giây
 
     while true do
         local character = player.Character
@@ -60,17 +57,18 @@ task.spawn(function()
 
             -- So sánh vị trí hiện tại với lần kiểm tra trước đó
             if lastPosition and (currentPosition - lastPosition).Magnitude < 1 then
-                stillCount = stillCount + 1
-                updateStatus("⚠️ Nhân vật đứng yên lần thứ: " .. stillCount)
+                stillTime = stillTime + 5 -- Cộng 5 giây mỗi lần đứng yên
+                updateStatus("⚠️ Đứng yên: " .. stillTime .. " giây")
 
-                -- Nếu đứng yên 10 lần liên tiếp, dịch chuyển
-                if stillCount >= 10 then
-                    updateStatus("⏩ Nhân vật đã đứng yên quá lâu, dịch chuyển...")
+                -- Nếu đứng yên tổng cộng 50 giây, dịch chuyển
+                if stillTime >= 300 then
+                    updateStatus("⏩ Đứng yên quá lâu, dịch chuyển...")
                     teleportCharacter(-540, 109, -5704)
-                    stillCount = 0 -- Reset bộ đếm và tiếp tục kiểm tra lại
+                    task.wait(15)
+                    stillTime = 0 -- Reset bộ đếm và tiếp tục kiểm tra lại
                 end
             else
-                stillCount = 0 -- Reset bộ đếm nếu nhân vật di chuyển
+                stillTime = 0 -- Reset bộ đếm nếu nhân vật di chuyển
                 updateStatus("✅ Nhân vật vẫn di chuyển...")
             end
 
