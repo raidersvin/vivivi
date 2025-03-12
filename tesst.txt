@@ -1,10 +1,6 @@
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
-
-
-_G.GDAYCARE = true
-_G.GENCHANTS = {"Breakable Mayhem","Chest Breaker","Criticals","Tap Power","Strong Pets","Explosive","Chest Breaker","Criticals","Tap Power"}
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 -- INSERT YOUR CONFIG HERE --
+
 _G.GPROGRESS_MODE = "nill"
 _G.GZONE_TO = 999
 _G.GGFX_MODE = 3
