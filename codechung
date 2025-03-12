@@ -24,7 +24,7 @@ task.spawn(function()
 end)
 ----------------------------------------------------------------------------------------------------------------
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
-task.wait(1) -- DO NOT remove this wait, it's against double counts.
+task.wait(1) 
 
 			-- INSERT YOUR CONFIG HERE --
 
@@ -63,9 +63,9 @@ _G.GEVENT_UPGRADES = {
    --"LuckyRaidPetSpeed",
 } 
 
-_G.GWEBHOOK_USERID = "" -- your discord userID, not your name. numerical id.
-_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1267494313978236969/A5PYB1MQt2UUASkZLJNvGB1qxAV7ajQAJeUTeCK8bssgC2u-VM_s2iH89ZOpQFwgiFQx" -- a webhook URL from your private discord channel.
-_G.GMAIL_RECEIVERS = {""} -- an account to receive hatched Huges etc
+_G.GWEBHOOK_USERID = "" 
+_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1267494313978236969/A5PYB1MQt2UUASkZLJNvGB1qxAV7ajQAJeUTeCK8bssgC2u-VM_s2iH89ZOpQFwgiFQx"
+_G.GMAIL_RECEIVERS = {""}
 
 _G.GMAIL_ITEMS = {
   ["All Huges"] = {Class = "Pet", Id = "All Huges", Amount = 1},
