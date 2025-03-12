@@ -9,13 +9,7 @@ script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 _G.GPROGRESS_MODE = "nill"
 _G.GZONE_TO = 999
 _G.GGFX_MODE = 2
-
-_G.GLOOTBOXES = {"Locked Hype Egg","Lucky Gift"}
-_G.GUSE_BOOSTS = true
-_G.GEVENT_UPGRADES = {
-   "LuckyRaidDamage",
-   "LuckyRaidXP",
-} 
+_G.GRANK_TO = 1
 
 -- INSERT YOUR CONFIG HERE --
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
