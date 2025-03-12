@@ -2,22 +2,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 
--- 📌 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player:WaitForChild("PlayerGui")
-
-local coordLabel = Instance.new("TextLabel")
-coordLabel.Size = UDim2.new(0, 300, 0, 50)
-coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Giữa màn hình
-coordLabel.BackgroundTransparency = 0.4
-coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-coordLabel.TextColor3 = Color3.new(1, 1, 1)
-coordLabel.TextScaled = true
-coordLabel.Font = Enum.Font.SourceSansBold
-coordLabel.Text = "🔍 Đang lấy tọa độ..."
-coordLabel.Parent = screenGui
-
--- 📌 Chờ nhân vật xuất hiện trước khi kiểm tra
+-- 🛠️ Chờ nhân vật xuất hiện trước khi kiểm tra
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
@@ -35,13 +20,28 @@ local function teleportCharacter(x, y, z)
         print(string.format("✅ Đã dịch chuyển đến: X=%.1f | Y=%.1f | Z=%.1f", x, y, z))
     end
 end
-task.wait(20)
+
+-- 🔥 Tạo GUI hiển thị tọa độ giữa màn hình
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local coordLabel = Instance.new("TextLabel")
+coordLabel.Size = UDim2.new(0, 300, 0, 50)
+coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Giữa màn hình
+coordLabel.BackgroundTransparency = 0.4
+coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+coordLabel.TextColor3 = Color3.new(1, 1, 1)
+coordLabel.TextScaled = true
+coordLabel.Font = Enum.Font.SourceSansBold
+coordLabel.Text = "🔍 Đang lấy tọa độ..."
+coordLabel.Parent = screenGui
+
 -- 🔥 Cập nhật tọa độ nhân vật liên tục hiển thị ở giữa màn hình
 RunService.RenderStepped:Connect(function()
     local character = player.Character
     if character and character:FindFirstChild("HumanoidRootPart") then
         local pos = character.HumanoidRootPart.Position
-        coordLabel.Text = string.format(" X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
+        coordLabel.Text = string.format("📍 Tọa độ: X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
     else
         coordLabel.Text = "⚠️ Không tìm thấy nhân vật!"
     end
@@ -66,6 +66,7 @@ task.spawn(function()
         task.wait(20) -- Kiểm tra lại mỗi 20 giây
     end
 end)
+
 -- 🎁 Auto Claim Daycare mỗi 3600 giây (1 tiếng)
 task.spawn(function()
     while true do
@@ -80,5 +81,27 @@ task.spawn(function()
         end
 
         task.wait(3600) -- Lặp lại mỗi 3600 giây
+    end
+end)
+
+-- 📌 Hàm kiểm tra X và cộng thêm 36 nếu trong khoảng (-530 đến -520)
+local function teleportIncreaseX()
+    local character = waitForCharacter()
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        local currentPos = humanoidRootPart.Position
+        if currentPos.X >= -530 and currentPos.X <= -520 then
+            humanoidRootPart.CFrame = CFrame.new(currentPos.X + math.random(25, 30), currentPos.Y, currentPos.Z) -- Cộng ngẫu nhiên từ 5 đến 30 vào X
+            print("✅ Đã cộng thêm vào X!")
+        end
+    end
+end
+
+-- 🔥 Kiểm tra và tăng X mỗi 20 giây nếu X nằm trong khoảng -530 đến -520
+task.spawn(function()
+    while true do
+        teleportIncreaseX()
+        task.wait(20) -- Kiểm tra mỗi 20 giây
     end
 end)
