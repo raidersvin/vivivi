@@ -1,7 +1,5 @@
 local Players = game:GetService("Players")
-
 local player = Players.LocalPlayer
-
 local function waitForCharacter()
     while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
         player.CharacterAdded:Wait()
@@ -11,7 +9,6 @@ end
 local function teleportIncreaseX()
     local character = waitForCharacter()
     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
     if humanoidRootPart then
         local currentPos = humanoidRootPart.Position
         if currentPos.X >= -530 and currentPos.X <= -520 then
@@ -19,14 +16,13 @@ local function teleportIncreaseX()
         end
     end
 end
-
 task.spawn(function()
     while true do
         teleportIncreaseX()
         task.wait(20) 
     end
 end)
-
+----------------------------------------------------------------------------------------------------------------
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) -- DO NOT remove this wait, it's against double counts.
 
