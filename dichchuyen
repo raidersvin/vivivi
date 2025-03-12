@@ -54,6 +54,6 @@ end)
 task.spawn(function()
     while true do
         teleportRandomX()
-        task.wait(60) -- Đợi 60 giây trước khi dịch chuyển lần tiếp theo
+        task.wait(5) -- Đợi 60 giây trước khi dịch chuyển lần tiếp theo
     end
 end)
