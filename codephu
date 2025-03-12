@@ -50,7 +50,6 @@ local function teleportCharacter(x, y, z)
     end
 end
 
--- Kiểm tra vị trí nhân vật liên tục mỗi 2 giây
 task.spawn(function()
 
     while true do
