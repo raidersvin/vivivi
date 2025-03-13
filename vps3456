@@ -19,7 +19,7 @@ _G.GUSE_BOOSTS = true
 _G.GAUTO_RAID = true
 _G.GMAX_RAID_LEVEL = 9999
 _G.GMIN_MULTIPLIER = 100
-_G.GSKIP_RAID_EGG = false
+_G.GSKIP_RAID_EGG = true
 _G.GRAID_TIMEOUT_MINUTES = 15
 
 _G.GDO_LUCKY_WORLD_EVENT = true
@@ -27,14 +27,14 @@ _G.GHATCH_LOBBY = true
 _G.GMAKE_LUCKY_GIFTS = true
 _G.GEVENT_UPGRADES = {
    "LuckyRaidDamage",
-   "LuckyRaidAttackSpeed",
+   --"LuckyRaidAttackSpeed",
    --"LuckyRaidPets",
-   --"LuckyRaidEggCost",
+   "LuckyRaidEggCost",
    --"LuckyRaidMoreCurrency",
    --"LuckyRaidBetterLoot",
    "LuckyRaidTitanicChest",
-   "LuckyRaidHugeChest",
-   "LuckyRaidXP",
+   --"LuckyRaidHugeChest",
+   --"LuckyRaidXP",
    --"LuckyRaidPetSpeed",
 } 
 
