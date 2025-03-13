@@ -45,6 +45,7 @@ end)
 
 -- 🛠️ Kiểm tra Y mỗi 20 giây, nếu nhân vật bị kẹt trong khoảng -5 đến 10 thì dịch chuyển
 task.spawn(function()
+    task.wait(40)
     while true do
         local character = player.Character
         if character and character:FindFirstChild("HumanoidRootPart") then
