@@ -34,7 +34,7 @@ _G.GEVENT_UPGRADES = {
    --"LuckyRaidBetterLoot",
    --"LuckyRaidTitanicChest",
    --"LuckyRaidHugeChest",
-   "LuckyRaidXP",
+   --"LuckyRaidXP",
    --"LuckyRaidPetSpeed",
 } 
 
