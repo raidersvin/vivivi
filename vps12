@@ -1,49 +1,20 @@
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-
-local function waitForCharacter()
-    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
-        player.CharacterAdded:Wait()
-    end
-    return player.Character
-end 
-local function teleportIncreaseX()
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoidRootPart then
-        local currentPos = humanoidRootPart.Position
-        if currentPos.X >= -530 and currentPos.X <= -520 then
-            humanoidRootPart.CFrame = CFrame.new(currentPos.X + 36, currentPos.Y, currentPos.Z) -- Cộng 36 vào X
-        end
-    end
-end
-
-task.spawn(function()
-    while true do
-        teleportIncreaseX()
-        task.wait(20) 
-    end
-end)
-
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
-task.wait(1) -- DO NOT remove this wait, it's against double counts.
+task.wait(1) 
 
 			-- INSERT YOUR CONFIG HERE --
 
-_G.GGFX_MODE = 2  --1 = REMOVE_TEXTURES : more stable! but no visuals
-_G.GZONE_TO = 999 -- PLEASE READ FAQ about this property!!! it's important to understand. 99 means last zone W1 only!! 999: go to final zone of game
-_G.GUSE_FLAGS = {"Hasty Flag"} -- Default: nil, To use specific flags all the time in your destination zone.
+_G.GGFX_MODE = 1 
+_G.GZONE_TO = 999 
+_G.GUSE_FLAGS = {"Hasty Flag"}
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
 _G.GPOTIONS_MAX_TIER = 19
 _G.GUSE_ULTIMATES = {"Tsunami","Tornado","Lightning Storm"}
-_G.GENCHANTS = {"Corruption","Criticals","Tap Teamwork","Strong Pets","Chest Breaker","Chest Breaker","Exotic Pet","Strong Pets","Huge Hunter"}
+_G.GENCHANTS = {"Corruption","Criticals","Tap Teamwork","Strong Pets","Chest Breaker","Chest Breaker","Exotic Pet","Strong Pets","Happy Pets"}
 _G.GDAYCARE = true
 _G.GHOLD_GIFTS = true
 _G.GHOLD_BUNDLES = true
 _G.GLOOTBOXES = {"Locked Hype Egg","Lucky Gift"}
-_G.GUSE_BOOSTS = true
+_G.GUSE_BOOSTS = true 
 
 _G.GAUTO_RAID = true
 _G.GMAX_RAID_LEVEL = 9999
@@ -56,8 +27,8 @@ _G.GHATCH_LOBBY = true
 _G.GMAKE_LUCKY_GIFTS = true
 _G.GEVENT_UPGRADES = {
    "LuckyRaidDamage",
-   --"LuckyRaidAttackSpeed",
-   --"LuckyRaidPets",
+   "LuckyRaidAttackSpeed",
+   "LuckyRaidPets",
    --"LuckyRaidEggCost",
    --"LuckyRaidMoreCurrency",
    --"LuckyRaidBetterLoot",
@@ -67,9 +38,9 @@ _G.GEVENT_UPGRADES = {
    --"LuckyRaidPetSpeed",
 } 
 
-_G.GWEBHOOK_USERID = "" -- your discord userID, not your name. numerical id.
-_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1267494313978236969/A5PYB1MQt2UUASkZLJNvGB1qxAV7ajQAJeUTeCK8bssgC2u-VM_s2iH89ZOpQFwgiFQx" -- a webhook URL from your private discord channel.
-_G.GMAIL_RECEIVERS = {""} -- an account to receive hatched Huges etc
+_G.GWEBHOOK_USERID = "" 
+_G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1267494313978236969/A5PYB1MQt2UUASkZLJNvGB1qxAV7ajQAJeUTeCK8bssgC2u-VM_s2iH89ZOpQFwgiFQx"
+_G.GMAIL_RECEIVERS = {""}
 
 _G.GMAIL_ITEMS = {
   ["All Huges"] = {Class = "Pet", Id = "All Huges", Amount = 1},
