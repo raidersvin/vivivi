@@ -15,7 +15,7 @@ local function teleportCharacter(x, y, z)
 
     if humanoidRootPart then
         humanoidRootPart.CFrame = CFrame.new(x, y, z)
-        print(string.format("✅ Đã dịch chuyển đến: X=%.1f | Y=%.1f | Z=%.1f", x, y, z))
+        print(string.format(" X=%.1f | Y=%.1f | Z=%.1f", x, y, z))
     end
 end
 
@@ -24,13 +24,13 @@ screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local coordLabel = Instance.new("TextLabel")
 coordLabel.Size = UDim2.new(0, 300, 0, 50)
-coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Giữa màn hình
+coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) 
 coordLabel.BackgroundTransparency = 0.4
 coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
 coordLabel.TextColor3 = Color3.new(1, 1, 1)
 coordLabel.TextScaled = true
 coordLabel.Font = Enum.Font.SourceSansBold
-coordLabel.Text = "🔍 Đang lấy tọa độ..."
+coordLabel.Text = "load..."
 coordLabel.Parent = screenGui
 
 RunService.RenderStepped:Connect(function()
@@ -39,11 +39,10 @@ RunService.RenderStepped:Connect(function()
         local pos = character.HumanoidRootPart.Position
         coordLabel.Text = string.format("X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
     else
-        coordLabel.Text = "⚠️ Không tìm thấy nhân vật!"
+        coordLabel.Text = "!"
     end
 end)
 
--- 🛠️ Kiểm tra Y mỗi 20 giây, nếu nhân vật bị kẹt trong khoảng -5 đến 10 thì dịch chuyển
 task.spawn(function()
     task.wait(40)
     while true do
@@ -51,20 +50,19 @@ task.spawn(function()
         if character and character:FindFirstChild("HumanoidRootPart") then
             local pos = character.HumanoidRootPart.Position
 
-            -- Kiểm tra nếu Y nằm trong khoảng -5 đến 10
             if pos.Y >= -5 and pos.Y <= 10 then
-                print("⚠️ Nhân vật bị kẹt trong khoảng -5 đến 10, sẽ dịch chuyển!")
+                print(" -5 đến 10!")
                 teleportCharacter(-10270, 4.4, -7310)
             else
-                print(string.format("✅ Nhân vật ổn định: Y = %.1f", pos.Y))
+                print(string.format(" Y = %.1f", pos.Y))
             end
         end
 
-        task.wait(20) -- Kiểm tra lại mỗi 20 giây
+        task.wait(20) 
     end
 end)
 
--- 🎁 Auto Claim Daycare mỗi 3600 giây (1 tiếng)
+
 task.spawn(function()
     while true do
         local success, err = pcall(function()
@@ -72,12 +70,12 @@ task.spawn(function()
         end)
 
         if success then
-            print("🎁 ✅ Đã tự động Claim Daycare thành công!")
+            print("Claim Daycare ")
         else
-            warn("❌ Lỗi khi Claim Daycare:", err)
+            warn("erre Claim Daycare:", err)
         end
 
-        task.wait(3600) -- Lặp lại mỗi 3600 giây
+        task.wait(3600) 
     end
 end)
 
@@ -88,8 +86,8 @@ local function teleportIncreaseX()
     if humanoidRootPart then
         local currentPos = humanoidRootPart.Position
         if currentPos.X >= -530 and currentPos.X <= -520 then
-            humanoidRootPart.CFrame = CFrame.new(currentPos.X + math.random(25, 30), currentPos.Y, currentPos.Z) -- Cộng ngẫu nhiên từ 5 đến 30 vào X
-            print("✅ Đã cộng thêm vào X!")
+            humanoidRootPart.CFrame = CFrame.new(currentPos.X + math.random(25, 30), currentPos.Y, currentPos.Z) 
+            print("add X!")
         end
     end
 end
@@ -97,6 +95,6 @@ end
 task.spawn(function()
     while true do
         teleportIncreaseX()
-        task.wait(20) -- Kiểm tra mỗi 20 giây
+        task.wait(20) 
     end
 end)
