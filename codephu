@@ -51,10 +51,10 @@ task.spawn(function()
             local pos = character.HumanoidRootPart.Position
 
             if pos.Y >= -5 and pos.Y <= 10 then
-                print(" -5 đến 10!")
+               
                 teleportCharacter(-10270, 4.4, -7310)
             else
-                print(string.format(" Y = %.1f", pos.Y))
+              
             end
         end
 
@@ -70,9 +70,9 @@ task.spawn(function()
         end)
 
         if success then
-            print("Claim Daycare ")
+           
         else
-            warn("erre Claim Daycare:", err)
+           
         end
 
         task.wait(3600) 
@@ -87,7 +87,7 @@ local function teleportIncreaseX()
         local currentPos = humanoidRootPart.Position
         if currentPos.X >= -530 and currentPos.X <= -520 then
             humanoidRootPart.CFrame = CFrame.new(currentPos.X + math.random(25, 30), currentPos.Y, currentPos.Z) 
-            print("add X!")
+           
         end
     end
 end
