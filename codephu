@@ -1,3 +1,7 @@
+task.spawn(function()
+
+task.wait(40)
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
@@ -19,10 +23,12 @@ local function teleportCharacter(x, y, z)
     end
 end
 
+
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
-local coordLabel = Instance.new("TextLabel")
+local coordLabel = Instance.new("TextLabelXXX")
 coordLabel.Size = UDim2.new(0, 300, 0, 50)
 coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) 
 coordLabel.BackgroundTransparency = 0.4
@@ -33,6 +39,7 @@ coordLabel.Font = Enum.Font.SourceSansBold
 coordLabel.Text = "load..."
 coordLabel.Parent = screenGui
 
+
 RunService.RenderStepped:Connect(function()
     local character = player.Character
     if character and character:FindFirstChild("HumanoidRootPart") then
@@ -42,6 +49,7 @@ RunService.RenderStepped:Connect(function()
         coordLabel.Text = "!"
     end
 end)
+
 
 task.spawn(function()
     task.wait(40)
@@ -97,4 +105,7 @@ task.spawn(function()
         teleportIncreaseX()
         task.wait(20) 
     end
+end)
+
+
 end)
