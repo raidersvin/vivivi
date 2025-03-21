@@ -5,10 +5,8 @@ script_key = "NpgYjqSGlVoUCHAtOaTgfhSSVNQSDMRj";
 _G.GEVENT_FPS  = 5
 _G.GGFX_MODE = 1 
 
-_G.GRANK_FIRST = true
 _G.GZONE_TO = 999
-_G.GREBIRTH_TO = 9
-_G.GRANK_TO= 19
+
 
 _G.GUSE_FLAGS = {"Hasty Flag"}
 _G.GPOTIONS = {"The Cocktail","Lucky","Treasure Hunter","Walkspeed","Diamonds","Damage"}
