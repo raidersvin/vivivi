@@ -49,25 +49,6 @@ RunService.RenderStepped:Connect(function()
 end)
 
 
-task.spawn(function()
-    task.wait(40)
-    while true do
-        local character = player.Character
-        if character and character:FindFirstChild("HumanoidRootPart") then
-            local pos = character.HumanoidRootPart.Position
-
-            if pos.Y >= -5 and pos.Y <= 10 then
-               
-                teleportCharacter(-10270, 4.4, -7310)
-            else
-              
-            end
-        end
-
-        task.wait(20) 
-    end
-end)
-
 
 task.spawn(function()
     while true do
@@ -85,23 +66,5 @@ task.spawn(function()
     end
 end)
 
-local function teleportIncreaseX()
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 
-    if humanoidRootPart then
-        local currentPos = humanoidRootPart.Position
-        if currentPos.X >= -530 and currentPos.X <= -520 then
-            humanoidRootPart.CFrame = CFrame.new(currentPos.X + math.random(25, 30), currentPos.Y, currentPos.Z) 
-           
-        end
-    end
-end
-
-task.spawn(function()
-    while true do
-        teleportIncreaseX()
-        task.wait(20) 
-    end
-end)
 
