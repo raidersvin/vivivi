@@ -1,70 +1,70 @@
-task.wait(80)
+task.wait(40)
 
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local player = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local function waitForCharacter()
-    while not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") do
-        player.CharacterAdded:Wait()
-    end
-    return player.Character
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local Client = ReplicatedStorage:FindFirstChild("Library") and ReplicatedStorage.Library.Client
+local SaveModule = require(Client.Save)
+
+-- Xóa thông báo cũ nếu có
+if PlayerGui:FindFirstChild("CustomNotification") then
+    PlayerGui:FindFirstChild("CustomNotification"):Destroy()
 end
 
-local function teleportCharacter(x, y, z)
-    local character = waitForCharacter()
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoidRootPart then
-        humanoidRootPart.CFrame = CFrame.new(x, y, z)
-        print(string.format(" X=%.1f | Y=%.1f | Z=%.1f", x, y, z))
-    end
-end
-
-
-
+-- Tạo ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Name = "CustomNotification"
+screenGui.Parent = PlayerGui
 
-local coordLabel = Instance.new("TextLabel")
-coordLabel.Size = UDim2.new(0, 300, 0, 50)
-coordLabel.Position = UDim2.new(0.5, -150, 0.5, -25) 
-coordLabel.BackgroundTransparency = 0.4
-coordLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-coordLabel.TextColor3 = Color3.new(1, 1, 1)
-coordLabel.TextScaled = true
-coordLabel.Font = Enum.Font.SourceSansBold
-coordLabel.Text = "load..."
-coordLabel.Parent = screenGui
+-- 🛑 Hàm kiểm tra và hiển thị thông báo
+local function checkForItem()
+    local inventory = SaveModule.Get()["Inventory"]
+    local itemCount = 0
 
-
-RunService.RenderStepped:Connect(function()
-    local character = player.Character
-    if character and character:FindFirstChild("HumanoidRootPart") then
-        local pos = character.HumanoidRootPart.Position
-        coordLabel.Text = string.format("X: %.1f | Y: %.1f | Z: %.1f", pos.X, pos.Y, pos.Z)
-    else
-        coordLabel.Text = "!"
+    for class, items in pairs(inventory) do
+        for _, item in pairs(items) do
+            if item.id == "Solar Pickaxe" then
+                itemCount = itemCount + (item._am or 1) -- Nếu có _am thì dùng, nếu không thì mặc định là 1
+            end
+        end
     end
-end)
 
-
-
-task.spawn(function()
-    while true do
-        local success, err = pcall(function()
-            require(game.ReplicatedStorage.Library.Client.ExclusiveDaycareCmds).Claim()
-        end)
-
-        if success then
-           
-        else
-           
+    -- Nếu tìm thấy, cập nhật thông báo
+    if itemCount > 0 then
+        -- Xóa thông báo cũ (nếu có)
+        if screenGui:FindFirstChild("NotificationFrame") then
+            screenGui:FindFirstChild("NotificationFrame"):Destroy()
         end
 
-        task.wait(1800) 
+        -- Tạo Frame
+        local frame = Instance.new("Frame")
+        frame.Name = "NotificationFrame"
+        frame.Size = UDim2.new(0, 50, 0, 50) -- Kích thước cố định
+        frame.Position = UDim2.new(1, -60, 0.9, -10) -- Căn sát bên phải
+        frame.BackgroundColor3 = Color3.fromRGB(200, 0, 0) -- Màu đỏ đậm
+        frame.BorderSizePixel = 2
+        frame.Parent = screenGui
+
+        -- Tạo TextLabel
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(1, 0, 1, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Màu chữ trắng
+        textLabel.Text =  itemCount
+        textLabel.TextScaled = true
+        textLabel.Parent = frame
     end
-end)
+end
 
+-- 🚀 Kiểm tra ngay khi chạy code
+checkForItem()
 
+-- ⏳ Chạy lại kiểm tra mỗi 60 giây
+while true do
+    task.wait(60) -- Đợi 60 giây
+    checkForItem()
+end
 
