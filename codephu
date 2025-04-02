@@ -1,4 +1,4 @@
-task.wait(40)
+task.wait(80)
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
