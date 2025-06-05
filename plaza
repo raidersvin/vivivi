@@ -1,11 +1,13 @@
-
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
+
 
 while not player do
     task.wait(1)
     player = Players.LocalPlayer
 end
+
+warn("------------------------------------------------------------------")
 
 
 if game.PlaceId ~= 15502339080 then
@@ -389,19 +391,24 @@ local function findInInventorySubTable(subTable, itemName, categoryName, PT_find
         if type(v) == "table" and v.id then
             -- Kiểm tra xem id có khớp chính xác với itemName và PT_find, SH_find, TN_find
             if string.match(v.id, "^" .. itemName .. "$") then  -- Dùng string.match để tìm phần chuỗi chính xác
+				--warn("v.pt:", v.pt, "type:", typeof(v.pt))
                 local ok = true
 
                 -- Kiểm tra điều kiện PT_find nếu có
                 if PT_find ~= nil and v.pt ~= PT_find then
                     ok = false
                 end
-                
+                if PT_find == nil and v.pt == 1 then
+					ok = false
+				end
+				if PT_find == nil and v.pt == 2 then
+					ok = false
+				end
                 -- Kiểm tra điều kiện SH_find nếu có
-                if SH_find ~= nil then
-                    if v.sh ~= SH_find then
-                        ok = false
-                    end
-                elseif SH_find == nil and v.sh ~= nil then
+                if SH_find == true and v.sh == nil then
+                    ok = false 
+                end
+				if SH_find == nil and v.sh == true then
                     -- Nếu SH_find là nil thì chỉ chấp nhận v.sh là nil
                     ok = false
                 end
@@ -452,7 +459,7 @@ end
             {name = "Seed", category = "Seed"},
             {name = "Ultimate", category = "Ultimate"}
         }
- 			if category_find == "Potion" or category_find == "Enchant" then
+ 			if category_find == "Potion" or category_find == "Enchant" or category_find == "XPPotion" then
 				local inventorySubTables = {
 					name = category_find , category = category_find
 				}	
