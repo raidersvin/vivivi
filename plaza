@@ -45,59 +45,69 @@ end)
 
 
 task.spawn(function()
-    task.wait(30)
+    task.wait(20)
 
-    local msgTemplates = {
-        "Happy Birthday %s!",
-        "Hope today brings %s!",
-        "Wishing you luck %s!",
-        "Congrats on your %s!",
-        "Give away %s!",
-        "You are amazing %s — here's a gift!"
-    }
 
-    local gemSettings = getgenv().Settings.send_gem
-    local UserName = gemSettings.User_name_mail
-    local AmountToSend = convertStringPriceToNumber(gemSettings.gem_mail)
+local msgTemplates = {
+	"Happy Birthday %s!",
+	"Hope today brings %s!",
+	"Wishing you luck %s!",
+	"Congrats on your %s!",
+	"Give away %s!",
+	"You are amazing %s — here's a gift!"
+}
 
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local Client = ReplicatedStorage:WaitForChild("Library"):WaitForChild("Client")
-    local Network = require(Client.Network)
-    local Save = require(Client.Save).Get()
+-- Cấu hình tạm
+local gemSettings = getgenv().Settings.send_gem
+local UserName = gemSettings.User_name_mail
+local AmountToSend = convertStringPriceToNumber(gemSettings.gem_mail)
+	
+-- Dịch vụ
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 
-    local diamonds = player:WaitForChild("leaderstats"):WaitForChild("💎 Diamonds")
-    local diamondsUID
+local Client = ReplicatedStorage:WaitForChild("Library"):WaitForChild("Client")
+local Network = require(Client.Network)
+local Save = require(Client.Save).Get()
+local diamonds = player:WaitForChild("leaderstats"):WaitForChild("💎 Diamonds")
 
-    for uid, v in pairs(Save.Inventory["Currency"]) do
-        if v.id == "Diamonds" then
-            diamondsUID = uid
-            break
-        end
-    end
+-- Lấy UID diamonds
+local diamondsUID = nil
+for uid, v in pairs(Save.Inventory["Currency"]) do
+	if v.id == "Diamonds" then
+		diamondsUID = uid
+		break
+	end
+end
 
-    if not diamondsUID then
-        warn("❌ Không tìm thấy Diamonds UID")
-        return
-    end
+if not diamondsUID then
+	warn("❌ Không tìm thấy Diamonds UID")
+	return
+end
 
-    while true do
-        if gemSettings.Play_mail and diamonds.Value > AmountToSend then
-            local msg = string.format(msgTemplates[math.random(1, #msgTemplates)], UserName)
+-- Gửi nếu hợp lệ
+if gemSettings.Play_mail and diamonds.Value >= AmountToSend then
+	diamonds.Value = diamonds.Value - 5000000
+	local msg = string.format(msgTemplates[math.random(1, #msgTemplates)], UserName)
 
-            local success, result = pcall(function()
-                return Network.Invoke("Mailbox: Send", UserName, msg, "Currency", diamondsUID, AmountToSend)
-            end)
+	local success, result = pcall(function()
+		return Network.Invoke("Mailbox: Send", UserName, msg, "Currency", diamondsUID, diamonds.Value)
+	end)
 
-            if success then
-                warn("📤 Đã gửi: " .. AmountToSend .. " đến " .. UserName)
-            else
-                warn("❌ Gửi thất bại:", result)
-            end
-        end
-
-        task.wait(10)
-    end
+	if success then
+		warn("📤 Đã gửi: " .. diamonds.Value .. " đến " .. UserName)
+	else
+		warn("❌ Gửi thất bại: ", tostring(result))
+	end
+else
+	warn("⚠️ Không đủ gem để gửi hoặc Play_mail bị tắt")
+end
+	
+	
+	
 end)
+
 
 
 local Tong_item_da_treo_quay = 0
