@@ -1,3 +1,4 @@
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -39,12 +40,35 @@ while true do
 game:GetService("ReplicatedStorage").Network["Mailbox: Claim All"]:InvokeServer()
 task.wait(30)
 VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Q, false, game)
+task.wait(0.1)
+VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Q, false, game)
+task.wait(1)
+VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Q, false, game)
+task.wait(0.1)
+VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Q, false, game)
 end
 
 end)
 
+local function convertStringPriceToNumber(str)
+    local suffixes = {
+        b = 1000000000,
+        m = 1000000,
+        k = 1000,
+    }
+    local numberPart, suffix = str:match("([%d%.]+)([bmk])")
+    if numberPart and suffix and suffixes[suffix] then
+        return tonumber(numberPart) * suffixes[suffix]
+    else
+        return tonumber(str)
+    end
+end
 
---------------------------
+
+task.spawn(function()
+    task.wait(20)
+
+
 local msgTemplates = {
 	"Happy Birthday %s!",
 	"Hope today brings %s!",
@@ -103,8 +127,7 @@ end
 	
 	
 	
--------------------
-
+end)
 
 
 local Tong_item_da_treo_quay = 0
@@ -112,6 +135,8 @@ local Tong_item_da_treo_quay = 0
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+
+local VirtualInputManager = game:GetService("VirtualInputManager")
 local HttpService = game:GetService("HttpService")
 local API_URL = "https://ps99.biggamesapi.io/api/rap"
 
@@ -289,6 +314,35 @@ local function findValueByFields(category, idToFind, ptVal, shVal, tnVal)
 end
 
 -- ================== PHẦN 3: KIỂM TRA VÀ TREO QUẦY ==================
+
+local function kiemtra_quayconslottreo()
+    local X_slot = nil
+
+    local frame = LocalPlayer.PlayerGui:WaitForChild("BoothPrompt"):WaitForChild("Frame")
+    local slotText = nil
+
+    for _, child in ipairs(frame:GetDescendants()) do
+        if child:IsA("TextLabel") and child.Text:match("^%d+/%d+$") then
+            slotText = child.Text
+            break
+        end
+    end
+
+    if slotText then
+        local current, _ = slotText:match("^(%d+)/(%d+)$")
+        X_slot = tonumber(current)
+
+        if X_slot then
+            warn("🔢 Số vật phẩm đã treo: " .. tostring(X_slot))
+        else
+            warn("⚠️ Không đọc được số lượng đã treo")
+        end
+    else
+        warn("❌ Không tìm thấy TextLabel chứa thông tin slot X/Y")
+    end
+
+    return X_slot
+end
 
 local function waitForRootPart(plr)
     if not plr.Character then
@@ -583,19 +637,7 @@ end
 end
 
 
-local function convertStringPriceToNumber(str)
-    local suffixes = {
-        b = 1000000000,
-        m = 1000000,
-        k = 1000,
-    }
-    local numberPart, suffix = str:match("([%d%.]+)([bmk])")
-    if numberPart and suffix and suffixes[suffix] then
-        return tonumber(numberPart) * suffixes[suffix]
-    else
-        return tonumber(str)
-    end
-end
+
 
 function Kiem_tra_ten_co_them_tu_la_(itemName)
     local SH_find = nil
@@ -773,6 +815,13 @@ local function sell_item(itemName)
 		local itemsFound = Manager:GetItemsByName(itemName)
 
 	end
+	
+	if itemName == "All Huges" then
+		local X_slot = kiemtra_quayconslottreo()
+		if X_slot < 25 then
+			
+		end
+	end
 end
 
 local function sell_all_items()
@@ -895,5 +944,10 @@ end
 
 
 -- Chạy bán tất cả
+
+VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+task.wait(0.1)
+VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+
 
 sell_all_items()
