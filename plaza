@@ -33,9 +33,14 @@ end)
 
 
 task.spawn(function()
-local VirtualInputManager = game:GetService("VirtualInputManager")
 
 task.wait(25)
+
+
+local Network = require(Client.Network)
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+
 while true do
 game:GetService("ReplicatedStorage").Network["Mailbox: Claim All"]:InvokeServer()
 task.wait(30)
