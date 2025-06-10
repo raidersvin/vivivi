@@ -44,10 +44,7 @@ end
 end)
 
 
-task.spawn(function()
-    task.wait(20)
-
-
+--------------------------
 local msgTemplates = {
 	"Happy Birthday %s!",
 	"Hope today brings %s!",
@@ -106,7 +103,7 @@ end
 	
 	
 	
-end)
+-------------------
 
 
 
