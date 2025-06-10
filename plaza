@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -141,7 +140,6 @@ local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 
-local VirtualInputManager = game:GetService("VirtualInputManager")
 local HttpService = game:GetService("HttpService")
 local API_URL = "https://ps99.biggamesapi.io/api/rap"
 
@@ -949,10 +947,4 @@ end
 
 
 -- Chạy bán tất cả
-
-VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-task.wait(0.1)
-VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-
-
 sell_all_items()
