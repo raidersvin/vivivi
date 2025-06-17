@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -18,6 +17,41 @@ if game.PlaceId ~= 15502339080 then
 	return
 end
 
+task.spawn(function()
+task.wait(25)
+local frame = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BoothPrompt"):WaitForChild("Frame")
+local slotText = nil
+
+-- Tìm TextLabel dạng "x/y" để biết số lượng treo trên quầy 
+for _, child in ipairs(frame:GetDescendants()) do
+    if child:IsA("TextLabel") and child.Text:match("^%d+/%d+$") then
+        slotText = child.Text
+        break
+    end
+end
+
+if slotText then
+    local current, total = slotText:match("^(%d+)/(%d+)$")
+    local totalNum = tonumber(total)
+    local maxSlots = 25
+
+    if totalNum and totalNum < maxSlots then
+        local need = maxSlots - totalNum
+        --warn("Dang thieu " .. tostring(need) .. " slot. Dang dung voucher...\n")
+
+        for i = 1, need do
+            game:GetService("ReplicatedStorage").Network.BoothSlotVoucher_Consume:InvokeServer()
+            --warn("Used voucher " .. tostring(i) .. " / " .. tostring(need) .. "\n")
+            task.wait(2) -- tránh spam quá nhanh
+        end
+    else
+        --warn("Da co " .. tostring(totalNum) .. " slot. Khong can dung voucher.\n")
+    end
+else
+    --warn("Khong tim thay thong tin slot.\n")
+end
+
+end)
 
 task.spawn(function()
 	task.wait(30)
@@ -30,7 +64,6 @@ task.spawn(function()
 	TeleportService:Teleport(placeId, game.Players.LocalPlayer)
 	
 end)
-
 
 task.spawn(function()
 
@@ -536,7 +569,7 @@ end
             {name = "Seed", category = "Seed"},
             {name = "Ultimate", category = "Ultimate"}
         }
- 			if category_find == "Potion" or category_find == "Enchant" or category_find == "XPPotion" then
+ 			if category_find == "Potion" or category_find == "Enchant" or category_find == "XPPotion" or category_find == "Tower" then
 				local inventorySubTables = {
 					name = category_find , category = category_find
 				}	
@@ -610,7 +643,7 @@ end
 					local ohNumber3 = tonumber(info.Count) or 1
 					
 					warn("Da tao listing "..info.ID..". UID : "..info.UID.." voi gia "..tostring(ohNumber2).." so luong "..tostring(ohNumber3))
-									
+
 					
 					local so_du_sau_50k = 0
 					while true do
@@ -643,7 +676,18 @@ end
 					
 					
 					Tong_item_da_treo_quay = Tong_item_da_treo_quay + 1
-					if Tong_item_da_treo_quay > 24 then break end
+					if Tong_item_da_treo_quay == 25 then 
+						while true do							
+							local X_slot = kiemtra_quayconslottreo()
+							warn("slot : "..X_slot)
+							
+							if X_slot < 25 then
+								Tong_item_da_treo_quay = X_slot
+								break
+							end
+							task.wait(60)
+						end
+					end
 
 			
         end
@@ -735,6 +779,119 @@ local function sell_item(itemName)
 	else
 		warn(tostring(itemName))
     end
+	
+	if string.find(itemName, "Tower") then
+        category_find = "Tower"
+        itemName = string.gsub(itemName, "Tower ", "") -- Loại bỏ từ "Tower"
+        warn("category Tower")
+		local SaveData = require(ReplicatedStorage.Library.Client.Save).Get()
+        local Manager = {}
+
+        function Manager:GetPets()
+            local Huges = {}
+            for uid, v in pairs(SaveData.Inventory.Tower) do
+                if string.find(v.id, itemName) then
+                    table.insert(Huges, {
+                        UID = uid,
+                        ID = v.id,                        
+                        PT = v.pt,
+						SH = v.sh
+                    })
+                end
+            end
+            return Huges
+        end
+
+        local hugesList = Manager:GetPets()
+        if #hugesList == 0 then
+            warn("Khong tim thay Tower co ID chua \"\"")
+        else
+            for _, info in ipairs(hugesList) do
+                local val1 = findValueByFields(
+                    "Tower",
+                    info.ID,					
+                    info.PT,  
+					info.SH,		
+                    nil
+                )
+                if val1 then
+                    warn("Tower "..info.ID.." co value = "..tostring(val1))
+                end
+
+                -- Xử lý price
+                local valFinal = val1
+                local priceRaw = item.Price
+
+                if type(priceRaw) == "number" then
+                    valFinal = priceRaw
+                elseif type(priceRaw) == "string" then
+                    local percentMatch = priceRaw:match("^[+]?[%d%.]+%%$")
+                    if percentMatch then
+                        local sign = priceRaw:sub(1,1)
+                        local numberPart = tonumber(priceRaw:match("[%d%.]+"))
+                        if not numberPart then
+                            warn("Loi phan tich phan tram cua item: " .. itemName)
+                            return
+                        end
+                        if sign == "+" then
+                            valFinal = valFinal + (valFinal * numberPart / 100)
+							valFinal = math.floor(valFinal)
+                            warn(itemName .. ": Tang gia " .. tostring(numberPart) .. "%, gia moi: " .. tostring(valFinal))
+                        else
+                            valFinal = valFinal - (valFinal * numberPart / 100)
+							valFinal = math.floor(valFinal)
+                            warn(itemName .. ": Giam gia " .. tostring(numberPart) .. "%, gia moi: " .. tostring(valFinal))
+                        end
+                    else
+                        local converted = convertStringPriceToNumber(priceRaw)
+                        if converted then
+                            valFinal = converted
+                            warn(itemName .. ": Chuyen chuoi '" .. tostring(priceRaw) .. "' thanh so: " .. tostring(valFinal))
+                        else
+                            warn(itemName .. ": Khong the chuyen doi gia: " .. tostring(priceRaw))
+                            return
+                        end
+                    end
+                end
+
+                -- Treo bán trên booth
+                local ohString1 = tostring(info.UID)
+                local ohNumber2 = valFinal or 0
+                local ohNumber3 = 1
+				task.wait(1)
+                game:GetService("ReplicatedStorage").Network.Booths_CreateListing:InvokeServer(
+                    ohString1,
+                    ohNumber2,
+                    ohNumber3
+                )
+                warn("Da tao listing pet "..info.ID.." voi gia "..tostring(ohNumber2))
+                task.wait(2)
+
+                Tong_item_da_treo_quay = Tong_item_da_treo_quay + 1
+                if Tong_item_da_treo_quay == 25 then 
+					while true do
+						
+						local X_slot = kiemtra_quayconslottreo()
+						warn("slot : "..X_slot)
+						
+						if X_slot < 25 then
+							Tong_item_da_treo_quay = X_slot
+							break
+						end
+						task.wait(60)
+					end
+				end
+				
+				
+				
+            end
+        end
+		
+		
+		
+		
+    end
+	
 	
     if itemName == "All Huges" then
         local SaveData = require(ReplicatedStorage.Library.Client.Save).Get()
