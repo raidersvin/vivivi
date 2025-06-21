@@ -892,7 +892,6 @@ local function sell_item(itemName)
 		
     end
 	
-	
     if itemName == "All Huges" then
         local SaveData = require(ReplicatedStorage.Library.Client.Save).Get()
         local Manager = {}
@@ -931,7 +930,9 @@ local function sell_item(itemName)
                 -- Xử lý price
                 local valFinal = val1
                 local priceRaw = item.Price
-
+				local Min_sell = item.Min_sell
+				local Max_sell = item.Max_sell
+				
                 if type(priceRaw) == "number" then
                     valFinal = priceRaw
                 elseif type(priceRaw) == "string" then
@@ -963,7 +964,19 @@ local function sell_item(itemName)
                         end
                     end
                 end
+				
+				if Min_sell ~= nil and Max_sell ~= nil then
+					Min_sell = convertStringPriceToNumber(Min_sell)
+					if Min_sell > valFinal then
+						valFinal = Min_sell
+					end
+					Max_sell = convertStringPriceToNumber(Max_sell)
+					if Max_sell < valFinal then
+						valFinal = Max_sell
+					end
+				end				
 
+				
                 -- Treo bán trên booth
                 local ohString1 = tostring(info.UID)
                 local ohNumber2 = valFinal or 0
@@ -1058,7 +1071,17 @@ if getgenv().Settings.xoa_Map then
 	if interact then
 		interact:Destroy()
 	end
-
+	
+	
+	
+	local parts = workspace:WaitForChild("TradingPlaza"):WaitForChild("Parts")
+	-- 🧹 Xoá mọi phần tử con có tên "Waterfall"
+	for _, part in ipairs(parts:GetDescendants()) do
+		if part.Name == "Waterfall" then
+			warn("🗑️ Destroying:", part:GetFullName())
+			part:Destroy()
+		end
+	end
 
 
 	-- 🛑 Ẩn toàn bộ map (trừ Camera, Terrain, Player)
