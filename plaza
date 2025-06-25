@@ -1088,7 +1088,7 @@ local function sell_item(itemName)
         end
     end
 
-	if string.find(itemName, "All Huges") == false then
+	if string.find(itemName, "All Huges") == nil then
 
 		local itemsFound = Manager:GetItemsByName(itemName)
 
