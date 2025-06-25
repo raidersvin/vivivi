@@ -1,3 +1,5 @@
+
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -476,6 +478,8 @@ end
 local Manager = {}
 
 function Manager:GetItemsByName(itemName)
+
+
     local ReplicatedStorage = game:GetService("ReplicatedStorage")    
     local SaveData = require(ReplicatedStorage.Library.Client.Save).Get()
 	local item = getgenv().Settings["Items"][itemName]
@@ -536,7 +540,6 @@ end
 
     -- Tìm trong Pet trước
 	local itemName, SH_find, PT_find, TN_find, category_find = Kiem_tra_ten_co_them_tu_la_(itemName)
-
 	
     findInInventorySubTable(SaveData.Inventory.Pet,itemName, "Pet",PT_find,SH_find,TN_find)
 	
@@ -880,8 +883,12 @@ local function sell_item(itemName)
 		
 		
     end
-	
-    if itemName == "All Huges" then
+
+
+	if string.find(itemName, "All Huges") then
+		
+		local itemName, SH_find, PT_find = Kiem_tra_ten_co_them_tu_la_(itemName)
+		
         local SaveData = require(ReplicatedStorage.Library.Client.Save).Get()
         local Manager = {}
 
@@ -889,12 +896,40 @@ local function sell_item(itemName)
             local Huges = {}
             for uid, v in pairs(SaveData.Inventory.Pet) do
                 if string.find(v.id, "Huge") then
-                    table.insert(Huges, {
-                        UID = uid,
-                        ID = v.id,                        
-                        PT = v.pt,
-						SH = v.sh
-                    })
+                    local ok = true
+
+					-- Kiểm tra điều kiện PT_find nếu có
+					if PT_find ~= nil and v.pt ~= PT_find then
+						ok = false
+					end
+					if PT_find == nil and v.pt == 1 then
+						ok = false
+					end
+					if PT_find == nil and v.pt == 2 then
+						ok = false
+					end
+					-- Kiểm tra điều kiện SH_find nếu có
+					if SH_find == true and v.sh == nil then
+						ok = false 
+					end
+					if SH_find == nil and v.sh == true then
+						-- Nếu SH_find là nil thì chỉ chấp nhận v.sh là nil
+						ok = false
+					end
+
+
+					-- Nếu tất cả điều kiện đều thỏa mãn, thêm vào danh sách
+					if ok then
+						table.insert(Huges, {
+							UID = uid,
+							ID = v.id,
+							PT = v.pt,
+							SH = v.sh
+						})
+					end
+					
+					
+					
                 end
             end
             return Huges
@@ -1000,7 +1035,7 @@ local function sell_item(itemName)
         end
     end
 
-	if itemName ~= "All Huges" then
+	if string.find(itemName, "All Huges") == false then
 
 		local itemsFound = Manager:GetItemsByName(itemName)
 
