@@ -1,5 +1,3 @@
-
-
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -107,7 +105,9 @@ end
 
 task.spawn(function()
     task.wait(20)
-
+if gemSettings.Play_mail == false then
+	return
+end
 
 local msgTemplates = {
 	"Happy Birthday %s!",
@@ -118,7 +118,6 @@ local msgTemplates = {
 	"You are amazing %s — here's a gift!"
 }
 
--- Cấu hình tạm
 local gemSettings = getgenv().Settings.send_gem
 local UserName = gemSettings.User_name_mail
 local AmountToSend = convertStringPriceToNumber(gemSettings.gem_mail)
@@ -131,6 +130,9 @@ local player = Players.LocalPlayer
 local Client = ReplicatedStorage:WaitForChild("Library"):WaitForChild("Client")
 local Network = require(Client.Network)
 local Save = require(Client.Save).Get()
+
+
+while true do
 local diamonds = player:WaitForChild("leaderstats"):WaitForChild("💎 Diamonds")
 
 -- Lấy UID diamonds
@@ -165,8 +167,9 @@ else
 	warn("⚠️ Không đủ gem để gửi hoặc Play_mail bị tắt")
 end
 	
-	
-	
+task.wait(30)
+end
+
 end)
 
 
@@ -939,6 +942,11 @@ local function sell_item(itemName)
         if #hugesList == 0 then
             warn("Khong tim thay pet co ID chua \"Huge\"")
         else
+		
+			local savedList_price_all = {}
+			local sold_by_convention = item.sold_by_convention
+			
+			
             for _, info in ipairs(hugesList) do
                 local val1 = findValueByFields(
                     "Pet",
@@ -956,6 +964,8 @@ local function sell_item(itemName)
                 local priceRaw = item.Price
 				local Min_sell = item.Min_sell
 				local Max_sell = item.Max_sell
+				local UID_sell = 0
+				local valFinal_sell = 0
 				
                 if type(priceRaw) == "number" then
                     valFinal = priceRaw
@@ -999,39 +1009,82 @@ local function sell_item(itemName)
 						valFinal = Max_sell
 					end
 				end				
-
 				
-                -- Treo bán trên booth
-                local ohString1 = tostring(info.UID)
-                local ohNumber2 = valFinal or 0
-                local ohNumber3 = 1
-				task.wait(1)
-                game:GetService("ReplicatedStorage").Network.Booths_CreateListing:InvokeServer(
-                    ohString1,
-                    ohNumber2,
-                    ohNumber3
-                )
-                warn("Da tao listing pet "..info.ID.." voi gia "..tostring(ohNumber2))
-                task.wait(2)
+				
+				if sold_by_convention == true then
+					table.insert(savedList_price_all, {UID_sell = info.UID, valFinal_sell = valFinal})		
+					warn("table sold_by_convention = true")		
+				else
+					-- Treo bán trên booth
+					local ohString1 = tostring(info.UID)
+					local ohNumber2 = valFinal or 0
+					task.wait(1)
+					game:GetService("ReplicatedStorage").Network.Booths_CreateListing:InvokeServer(
+						ohString1,
+						ohNumber2,
+						1
+					)
+					warn("Da tao listing pet "..info.ID.." voi gia "..tostring(ohNumber2))
+					task.wait(2)
 
-                Tong_item_da_treo_quay = Tong_item_da_treo_quay + 1
-                if Tong_item_da_treo_quay == 25 then 
-					while true do
-						
-						local X_slot = kiemtra_quayconslottreo()
-						warn("slot : "..X_slot)
-						
-						if X_slot < 25 then
-							Tong_item_da_treo_quay = X_slot
-							break
+					Tong_item_da_treo_quay = Tong_item_da_treo_quay + 1
+					if Tong_item_da_treo_quay == 25 then 
+						while true do
+							
+							local X_slot = kiemtra_quayconslottreo()
+							warn("slot : "..X_slot)
+							
+							if X_slot < 25 then
+								Tong_item_da_treo_quay = X_slot
+								break
+							end
+							task.wait(60)
 						end
-						task.wait(60)
 					end
 				end
 				
 				
-				
             end
+			-- sau vòng for
+			if sold_by_convention == true then
+				warn("sap xep lai thap den cao")
+				table.sort(savedList_price_all, function(a, b)
+					return a.valFinal_sell < b.valFinal_sell
+				end)
+				
+				
+				for _, data in ipairs(savedList_price_all) do
+					-- Treo bán trên booth
+					local ohString1 = data.UID_sell
+					local ohNumber2 = data.valFinal_sell
+					task.wait(1)
+					game:GetService("ReplicatedStorage").Network.Booths_CreateListing:InvokeServer(
+						ohString1,
+						ohNumber2,
+						1
+					)
+					
+					task.wait(2)
+
+					Tong_item_da_treo_quay = Tong_item_da_treo_quay + 1
+					if Tong_item_da_treo_quay == 25 then 
+						while true do
+							
+							local X_slot = kiemtra_quayconslottreo()
+							warn("slot : "..X_slot)
+							
+							if X_slot < 25 then
+								Tong_item_da_treo_quay = X_slot
+								break
+							end
+							task.wait(60)
+						end
+					end
+				
+					
+				end
+			end		 
+			
         end
     end
 
