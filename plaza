@@ -105,9 +105,7 @@ end
 
 task.spawn(function()
     task.wait(20)
-if gemSettings.Play_mail == false then
-	return
-end
+
 
 local msgTemplates = {
 	"Happy Birthday %s!",
@@ -119,6 +117,12 @@ local msgTemplates = {
 }
 
 local gemSettings = getgenv().Settings.send_gem
+
+if gemSettings.Play_mail == false then
+	return
+end
+
+
 local UserName = gemSettings.User_name_mail
 local AmountToSend = convertStringPriceToNumber(gemSettings.gem_mail)
 	
