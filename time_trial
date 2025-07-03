@@ -1,6 +1,7 @@
 task.spawn(function()
 task.wait(60)
 
+
 local player = game.Players.LocalPlayer
 local Save = require(game.ReplicatedStorage.Library.Client.Save)
 local TimeTrials = require(game.ReplicatedStorage.Library.Types.TimeTrials)
@@ -36,7 +37,7 @@ local function getDuration()
     local timeTrialStats = saveData.TimeTrialStats
     if not timeTrialStats then
         warn("Khong tim thay TimeTrialStats trong du lieu save\n")
-        return 60
+        return 48
     end
 
     local totalRuns = timeTrialStats.TotalRuns or timeTrialStats.RemainingRuns or 0
@@ -52,7 +53,7 @@ local function getDuration()
     local goal = TimeTrials.Goals[goalIndex]
 
     if not goal or not goal.Reward then
-        duration = 260
+        duration = 120
     else
         local amount = nil
         local success, result = pcall(function()
@@ -63,7 +64,7 @@ local function getDuration()
         end
 
         if typeof(amount) == "number" and math.floor(amount) == amount then
-            duration = 60
+            duration = 48
         else
             duration = 120
         end
@@ -110,13 +111,13 @@ task.wait(5)
 local startTime = 0
 while startTime < duration do
     startTime = startTime + 1
-    
+    warn("Số lần compo tele : "..startTime)
     teleportSequence(player, teleportSequence1)  -- Gọi teleportSequence
     task.wait(1)  -- Đảm bảo có thời gian chờ giữa các vòng lặp
 end
 
 teleportSequence(player, teleportSequence2)  -- Gọi teleportSequence2
-task.wait(8)
+task.wait(10)
 
 teleportTo(workspace.__THINGS.Instances.TimeTrial.Teleports.Leave)
 
@@ -124,5 +125,4 @@ task.wait(15)
 
 end
 
-
-end
+end)
