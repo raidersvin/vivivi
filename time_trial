@@ -101,7 +101,7 @@ while true do
 
 		
 		local duration = getDuration()
-        if not duration or duration <= 0 or duration == 122 then
+        if not duration or duration <= 0 or duration == 250 then
             warn("Duration <= 0 hoac khong hop le, ket thuc vong lap")
             break
         end
