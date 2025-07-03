@@ -6,6 +6,7 @@ if game.PlaceId ~= 140403681187145 then
 	return
 end
 
+
 local player = game.Players.LocalPlayer
 local Save = require(game.ReplicatedStorage.Library.Client.Save)
 local TimeTrials = require(game.ReplicatedStorage.Library.Types.TimeTrials)
@@ -41,7 +42,7 @@ local function getDuration()
     local timeTrialStats = saveData.TimeTrialStats
     if not timeTrialStats then
         warn("Khong tim thay TimeTrialStats trong du lieu save\n")
-        return 50
+        return 53
     end
 
     local totalRuns = timeTrialStats.TotalRuns or timeTrialStats.RemainingRuns or 0
@@ -57,7 +58,7 @@ local function getDuration()
     local goal = TimeTrials.Goals[goalIndex]
 
     if not goal or not goal.Reward then
-        duration = 200
+        duration = 250
     else
         local amount = nil
         local success, result = pcall(function()
@@ -68,9 +69,9 @@ local function getDuration()
         end
 
         if typeof(amount) == "number" and math.floor(amount) == amount then
-            duration = 50
+            duration = 53
         else
-            duration = 200
+            duration = 250
         end
     end
     warn("Duration duoc dat la: " .. tostring(duration) .. "\n")
@@ -96,14 +97,11 @@ if not (character and character:FindFirstChild("HumanoidRootPart")) then
     return  -- Dừng lại nếu không tìm thấy HumanoidRootPart
 end
 
--- Dịch chuyển đến vị trí ban đầu
-
-
 while true do
 
 		
 		local duration = getDuration()
-        if not duration or duration <= 0 or duration == 200 then
+        if not duration or duration <= 0 or duration == 122 then
             warn("Duration <= 0 hoac khong hop le, ket thuc vong lap")
             break
         end
@@ -111,14 +109,33 @@ while true do
 
 teleportTo(workspace.__THINGS.Instances.TimeTrial.Teleports.Enter)
 
-task.wait(5)
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+-- Kiểm tra nếu HumanoidRootPart tồn tại và kiểm tra tọa độ X
+while true do
+    if humanoidRootPart then
+        local currentX = humanoidRootPart.Position.X
+
+        -- Kiểm tra tọa độ X có nằm trong phạm vi -18415 đến -18425 không
+        if currentX >= -18425 and currentX <= -18415 then
+            warn("Tọa độ X trong phạm vi, thoát vòng lặp.")
+            break  -- Thoát vòng lặp nếu tọa độ X nằm trong phạm vi
+        end
+    end
+
+    task.wait(0.5)  -- Delay 0,5 giây rồi kiểm tra lại
+end
+
+
 
 local startTime = 0
 while startTime < duration do
     startTime = startTime + 1
     warn("Số lần compo tele : "..startTime)
-    teleportSequence(player, teleportSequence1)  -- Gọi teleportSequence
-    task.wait(0.3)  -- Đảm bảo có thời gian chờ giữa các vòng lặp
+    teleportSequence(player, teleportSequence1)  
+    task.wait(0.3)  
 end
 
 teleportSequence(player, teleportSequence2)  -- Gọi teleportSequence2
@@ -129,5 +146,6 @@ teleportTo(workspace.__THINGS.Instances.TimeTrial.Teleports.Leave)
 task.wait(15)
 
 end
+
 
 end)
