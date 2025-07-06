@@ -973,6 +973,8 @@ local function sell_item(itemName)
 				local Max_sell = item.Max_sell
 				local UID_sell = 0
 				local valFinal_sell = 0
+				Min_sell = convertStringPriceToNumber(Min_sell)
+				Max_sell = convertStringPriceToNumber(Max_sell)
 				
                 if type(priceRaw) == "number" then
                     valFinal = priceRaw
@@ -986,10 +988,16 @@ local function sell_item(itemName)
                             return
                         end
                         if sign == "+" then
+							if valFinal == nil or not valFinal then
+								valFinal = Max_sell
+							end
                             valFinal = valFinal + (valFinal * numberPart / 100)
 							valFinal = math.floor(valFinal)
                             warn(itemName .. ": Tang gia " .. tostring(numberPart) .. "%, gia moi: " .. tostring(valFinal))
                         else
+							if valFinal == nil or not valFinal then
+								valFinal = Max_sell
+							end
                             valFinal = valFinal - (valFinal * numberPart / 100)
 							valFinal = math.floor(valFinal)
                             warn(itemName .. ": Giam gia " .. tostring(numberPart) .. "%, gia moi: " .. tostring(valFinal))
@@ -1007,11 +1015,11 @@ local function sell_item(itemName)
                 end
 				
 				if Min_sell ~= nil and Max_sell ~= nil then
-					Min_sell = convertStringPriceToNumber(Min_sell)
+					
 					if Min_sell > valFinal then
 						valFinal = Min_sell
 					end
-					Max_sell = convertStringPriceToNumber(Max_sell)
+					
 					if Max_sell < valFinal then
 						valFinal = Max_sell
 					end
